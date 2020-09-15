@@ -6,7 +6,7 @@ import { Button } from "@material-ui/core";
 function App() {
   return (
     <div className='App'>
-      <Button>This is a Material Button</Button>
+      <Button>Material Button</Button>
     </div>
   );
 }
