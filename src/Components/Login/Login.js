@@ -15,6 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { signInWithEmail } from "../../Firebase";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -50,16 +51,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const history = useHistory();
   const classes = useStyles();
 
   function onSubmit(e) {
+    const error = document.getElementById("error");
+
     //console.log(e);
     // console.log(e.target.password.value);
     // console.log(e.target.email.value);
     let email = e.target.email.value;
     let password = e.target.password.value;
+    //let isChecked = e.target.checkBox.chec;
 
+    //console.log(isChecked);
+
+    const isInvalid = password === "" || email === "";
+    if (isInvalid) {
+      console.log("error in forms");
+      return;
+    }
     signInWithEmail(email, password);
+    history.push("/");
     e.preventDefault();
   }
   return (
@@ -95,10 +108,13 @@ export default function SignIn() {
             id='password'
             autoComplete='current-password'
           />
+          <div id='error'></div>
           <FormControlLabel
             control={<Checkbox value='remember' color='primary' />}
             label='Remember me'
+            name='checkBox'
           />
+
           <Button
             type='submit'
             fullWidth

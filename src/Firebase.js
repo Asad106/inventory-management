@@ -4,16 +4,15 @@ import "firebase/firestore";
 import "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDYjCiTEI5H3dpw7yOMI0bFGQ3DtTiMhEY",
-  authDomain: "fir-guide-8a183.firebaseapp.com",
-  databaseURL: "https://fir-guide-8a183.firebaseio.com",
-  projectId: "fir-guide-8a183",
-  storageBucket: "fir-guide-8a183.appspot.com",
-  messagingSenderId: "13608801984",
-  appId: "1:13608801984:web:1940b1a26fe39e6cb83f25",
-  measurementId: "G-J2EG64C4F9",
+  apiKey: "AIzaSyBRyc64HggeuL_BLpef33iwWE5l_Cerse0",
+  authDomain: "peerdrop-dev-7aaf9.firebaseapp.com",
+  databaseURL: "https://peerdrop-dev-7aaf9.firebaseio.com",
+  projectId: "peerdrop-dev-7aaf9",
+  storageBucket: "peerdrop-dev-7aaf9.appspot.com",
+  messagingSenderId: "818168037247",
+  appId: "1:818168037247:web:f59b672ddc0d77ea8fa44a",
+  measurementId: "G-ZNBSZPF166",
 };
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -35,15 +34,18 @@ export const signInWithEmail = (email, password) =>
     .signInWithEmailAndPassword(email, password)
     .then((user) => {
       localStorage.setItem("email", email);
+      console.log("user authenticated");
     })
     .catch((ex) => {
-      switch (ex) {
+      switch (ex.code) {
         case "auth/invalid-email":
         case "auth/user-disabled":
         case "auth/user-not-found":
         case "auth/wrong-password":
-          console.log("invalid username/password");
-          break;
+          //console.log("invalid username/password");
+          document.getElementById("error").innerText =
+            "invalid username/password";
+          return;
         default:
           break;
       }
