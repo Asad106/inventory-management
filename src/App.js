@@ -1,26 +1,67 @@
 /** @format */
 
-import React, { useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
-import Menu from "./Components/Menu/Menu";
+import React from "react";
+import { Route, Switch, BrowserRouter, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import SignIn from "./Components/auth/SignIn";
+import Dashboard from "./Components/Dashboard/Dashboard";
+import SideDrawer from "./Components/layout/SideDrawer";
+import Statistics from "./Components/layout/Statistics";
+import Sales from "./Components/layout/Sales";
+import Resolution from "./Components/layout/Resolution";
+import UserManagement from "./Components/layout/UserManagement";
+import InventoryManagement from "./Components/layout/InventoryManagement";
+import FinancialManagement from "./Components/layout/FinancialManagement";
+import Settings from "./Components/layout/Settings";
 
-import SignIn from "./Components/Login/Login";
-let userEmail = null;
+function App(props) {
+  console.log(props);
+  // const { auth } = props;
+  // const link = auth.uid ? (
+  //   <div className='App'>
+  //     <SideDrawer />
 
-function App() {
-  useEffect(() => {
-    userEmail = localStorage.getItem("email");
-  }, []);
-
+  //     <Switch>
+  //       <Route exact path='/' component={Dashboard} />
+  //       <Route path='/statistics' component={Statistics} />
+  //       <Route path='/sales' component={Sales} />
+  //       <Route path='/resolution' component={Resolution} />
+  //       <Route path='/usermanagement' component={UserManagement} />
+  //       <Route path='/inventory' component={InventoryManagement} />
+  //       <Route path='/financial' component={FinancialManagement} />
+  //       <Route path='/settings' component={Settings} />
+  //       <Route path='/signin' component={SignIn} />
+  //     </Switch>
+  //   </div>
+  // ) : (
+  //   props.history.push("/signin")
+  // );
   return (
-    <>
-      <Switch>
-        {console.log(`in render function ${userEmail}`)}
-        <Route exact path='/' component={Menu} />
-        <Route exact path='/signin' component={SignIn} />
-      </Switch>
-    </>
+    <React.Fragment>
+      <BrowserRouter>
+        <div className='App'>
+          <SideDrawer />
+
+          <Switch>
+            <Route exact path='/' component={Dashboard} />
+            <Route path='/statistics' component={Statistics} />
+            <Route path='/sales' component={Sales} />
+            <Route path='/resolution' component={Resolution} />
+            <Route path='/usermanagement' component={UserManagement} />
+            <Route path='/inventory' component={InventoryManagement} />
+            <Route path='/financial' component={FinancialManagement} />
+            <Route path='/settings' component={Settings} />
+            <Route path='/signin' component={SignIn} />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    </React.Fragment>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return { auth: state.firebase.auth };
+};
+
+export default connect(mapStateToProps)(App);

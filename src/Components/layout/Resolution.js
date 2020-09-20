@@ -2,12 +2,12 @@
 
 import React from "react";
 
-function Statistics() {
+function Resolution() {
   return (
     <div>
-      <h1>Statistics</h1>
+      <h1>Resolution Page</h1>
     </div>
   );
 }
 
-export default Statistics;
+export default Resolution;
