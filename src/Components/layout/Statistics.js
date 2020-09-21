@@ -5,7 +5,7 @@ import React from "react";
 function Statistics() {
   return (
     <div>
-      <h1>Statistics Page</h1>
+      <h5>Statistics Page</h5>
     </div>
   );
 }

@@ -12,6 +12,44 @@ form {
   margin-top: 100px;
 }
 
+.admin-dashboard {
+  color: white;
+}
+
 .App {
   display: flex;
+  flex-direction: row;
+}
+
+.side-drawer {
+  flex: 1;
+}
+
+.side-drawer-content {
+  flex: 6;
+  margin-top: 40px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.user-container {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+.display-container {
+  flex: 1;
+
+  padding: 10px;
+}
+.user-content {
+  flex: 20;
+}
+
+.link {
+  color: black;
+}
+
+.link:hover {
+  color: grey;
 }

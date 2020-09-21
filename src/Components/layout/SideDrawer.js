@@ -121,7 +121,9 @@ function SideDrawer(props) {
       <AppBar position='fixed' className={classes.appBar}>
         <Toolbar className={classes.customizeToolbar}>
           <Typography variant='h6' noWrap>
-            Peerdrop Admin Dashboard
+            <Link to='/' className='admin-dashboard'>
+              Peerdrop Admin Dashboard
+            </Link>
           </Typography>
         </Toolbar>
       </AppBar>

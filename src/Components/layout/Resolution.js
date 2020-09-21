@@ -5,7 +5,7 @@ import React from "react";
 function Resolution() {
   return (
     <div>
-      <h1>Resolution Page</h1>
+      <h5>Resolution Page</h5>
     </div>
   );
 }
