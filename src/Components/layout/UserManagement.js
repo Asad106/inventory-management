@@ -3,7 +3,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const userList = [
   {
     id: 1,
@@ -29,12 +29,12 @@ const useStyles = makeStyles((theme) => ({
 function UserManagement() {
   const classes = useStyles();
   return (
-    <div className>
+    <div>
       <h4 className='center grey-text text-darken-3'>User Management</h4>
 
-      <div class='divider'></div>
-      <Link className='link'>
-        <div class='user-container'>
+      <div className='divider'></div>
+      <Link className='link' to='/'>
+        <div className='user-container'>
           <div className='display-container'>
             <Avatar
               alt='T'
@@ -48,14 +48,14 @@ function UserManagement() {
             <p>Last signed in time : 24 September, 5PM</p>
           </div>
           <div className=''>
-            <a class='waves-effect waves-light btn'>Block</a>
+            <button>Block</button>
           </div>
         </div>
       </Link>
 
-      <div class='divider'></div>
-      <Link className='link'>
-        <div class='user-container'>
+      <div className='divider'></div>
+      <Link className='link' to='/'>
+        <div className='user-container'>
           <div className='display-container'>
             <Avatar
               alt='D'
@@ -68,15 +68,15 @@ function UserManagement() {
             <p>dbatero@live.com</p>
             <p>Last signed in time : 2nd September, 2AM</p>
           </div>
-          <div className=''>
-            <a class='waves-effect waves-light btn'>Block</a>
+          <div>
+            <button>Block</button>
           </div>
         </div>
       </Link>
 
-      <div class='divider'></div>
-      <Link className='link'>
-        <div class='user-container'>
+      <div className='divider'></div>
+      <Link className='link' to='/'>
+        <div className='user-container'>
           <div className='display-container'>
             <Avatar
               alt='J'
@@ -89,8 +89,8 @@ function UserManagement() {
             <p>John_Doe@gmail.com</p>
             <p>Last signed in time : 10 October, 10AM</p>
           </div>
-          <div className=''>
-            <a class='waves-effect waves-light btn'>Block</a>
+          <div>
+            <button>Block</button>
           </div>
         </div>
       </Link>

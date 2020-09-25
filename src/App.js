@@ -1,31 +1,58 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import SignIn from "./Components/auth/SignIn";
 import Dashboard from "./Components/Dashboard/Dashboard";
-import SideDrawer from "./Components/layout/SideDrawer";
 import Statistics from "./Components/layout/Statistics";
 import Sales from "./Components/layout/Sales";
 import Resolution from "./Components/layout/Resolution";
 import UserManagement from "./Components/layout/UserManagement";
-import InventoryManagement from "./Components/layout/InventoryManagement";
+import InventoryManagement from "./Components/layout/Inventory";
 import FinancialManagement from "./Components/layout/FinancialManagement";
 import Settings from "./Components/layout/Settings";
+import SideNavbar from "./Components/layout/SideNavbar";
+import ClipLoader from "react-spinners/ClipLoader";
+import SignInn from "./Components/auth/SignInn";
 
 function App(props) {
+  const [loading, setLoading] = useState(true);
   const { auth } = props;
 
+  const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  };
+
+  const wait = async (milliseconds) => {
+    console.log("waiting for 2 seconds");
+    await sleep(milliseconds);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      wait(1500);
+    };
+  });
+
   if (auth.uid) {
+    // eslint-disable-next-line no-lone-blocks
+    {
+      if (loading) {
+        return (
+          <div className='loading'>
+            <ClipLoader size={60} color={"#123abc"} loading={loading} />
+          </div>
+        );
+      }
+    }
+
     return (
       <React.Fragment>
         <BrowserRouter>
           <div className='App'>
-            <div className='side-drawer'>
-              {auth.uid ? <SideDrawer /> : null}
-            </div>
-            <div className='side-drawer-content'>
+            <SideNavbar>
               <Switch>
                 <Route exact path='/' component={Dashboard} />
                 <Route path='/statistics' component={Statistics} />
@@ -36,7 +63,7 @@ function App(props) {
                 <Route path='/financial' component={FinancialManagement} />
                 <Route path='/settings' component={Settings} />
               </Switch>
-            </div>
+            </SideNavbar>
           </div>
         </BrowserRouter>
       </React.Fragment>
@@ -46,6 +73,32 @@ function App(props) {
   }
 }
 
+// class App extends React.Component {
+//   state = { loading: true };
+
+//   sleep = (milliseconds) => {
+//     return new Promise((resolve) => setTimeout(resolve, milliseconds));
+//   };
+
+//   wait = async (milliseconds = 2000) => {
+//     console.log("waiting for 2 seconds");
+//     await this.sleep(milliseconds);
+//     this.setState({ loading: false });
+//   };
+
+//   componentDidMount() {
+//     this.wait(2000);
+//   }
+
+//   componentWillUnmount() {
+//     this.setState({ loading: true });
+//   }
+
+//   render() {
+//     const { auth } = this.props;
+//     return { if(condition) {} };
+//   }
+// }
 const mapStateToProps = (state) => {
   //console.log(state);
   return {

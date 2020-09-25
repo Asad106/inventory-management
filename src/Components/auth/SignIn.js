@@ -2,17 +2,17 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import { signIn } from "../../redux/actions/authActions";
-import Splash from "../../Splash";
 
 class SignIn extends Component {
   state = {
     email: "",
     password: "",
   };
+
   handleSubmit = (e) => {
     e.preventDefault();
+
     this.props.signIn(this.state);
   };
   handleOnChange = (e) => {
@@ -39,10 +39,16 @@ class SignIn extends Component {
             />
           </div>
           <div className='input-field'>
-            <button className='btn pink lighten-1 z-depth-0'>Login</button>
-            <div className='red-text center'>
-              {authError ? <p>{authError} </p> : null}
+            <div className='black-text center'>
+              {authError ? (
+                <h6>
+                  {authError === "auth/too-many-requests"
+                    ? "To many Invalid Attempts"
+                    : "Invalid Username/Password"}
+                </h6>
+              ) : null}
             </div>
+            <button className='btn pink lighten-1 z-depth-0'>Login</button>
           </div>
         </form>
       </div>
