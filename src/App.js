@@ -14,7 +14,6 @@ import FinancialManagement from "./Components/layout/FinancialManagement";
 import Settings from "./Components/layout/Settings";
 import SideNavbar from "./Components/layout/SideNavbar";
 import ClipLoader from "react-spinners/ClipLoader";
-import SignInn from "./Components/auth/SignInn";
 
 function App(props) {
   const [loading, setLoading] = useState(true);
