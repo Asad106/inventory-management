@@ -35,7 +35,7 @@ import {
   AccountCircle,
 } from "@material-ui/icons";
 
-const drawerWidth = 220;
+const drawerWidth = 240;
 
 const styles = (theme) => ({
   root: {
@@ -47,7 +47,7 @@ const styles = (theme) => ({
   drawer: {
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
-      //flexShrink: 0,
+      flexShrink: 0,
     },
   },
   appBar: {
@@ -64,9 +64,9 @@ const styles = (theme) => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  content: {
-    margin: 5,
-    padding: 2,
+  contentArea: {
+    flexGrow: 1,
+    paddingTop: theme.spacing(2),
   },
 });
 
@@ -182,31 +182,33 @@ class SideNavbar extends Component {
       <React.Fragment>
         <div className={classes.root}>
           <CssBaseline />
-          <AppBar position='absolute' className={classes.appBar}>
-            <Toolbar className={classes.customizeTooBar}>
+          <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar>
               <IconButton
-                color='inherit'
-                aria-label='open drawer'
-                edge='start'
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
                 onClick={this.handleDrawerToggle}
-                className={classes.menuButton}>
+                className={classes.menuButton}
+              >
                 <MenuIcon />
               </IconButton>
-              <Typography variant='h6' noWrap className={classes.typography}>
+              <Typography variant="h6" noWrap className={classes.typography}>
                 Peerdrop
               </Typography>
               <div>
                 <div>
                   <IconButton
-                    aria-label='account of current user'
-                    aria-controls='menu-appbar'
-                    aria-haspopup='true'
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
                     onClick={this.handleMenu}
-                    color='inherit'>
+                    color="inherit"
+                  >
                     <AccountCircle />
                   </IconButton>
                   <Menu
-                    id='menu-appbar'
+                    id="menu-appbar"
                     anchorEl={this.state.anchorEl}
                     anchorOrigin={{
                       vertical: "top",
@@ -218,7 +220,8 @@ class SideNavbar extends Component {
                       horizontal: "right",
                     }}
                     open={open}
-                    onClose={this.handleClose}>
+                    onClose={this.handleClose}
+                  >
                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                     <MenuItem onClick={this.handleClose}>Settings</MenuItem>
                     {auth && (
@@ -229,12 +232,11 @@ class SideNavbar extends Component {
               </div>
             </Toolbar>
           </AppBar>
-
-          <nav className={classes.drawer} aria-label='mailbox folders'>
+          <nav className={classes.drawer} aria-label="mailbox folders">
             {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-            <Hidden smUp implementation='css'>
+            <Hidden smUp implementation="css">
               <Drawer
-                variant='temporary'
+                variant="temporary"
                 open={mobileOpen}
                 onClose={this.handleDrawerToggle}
                 classes={{
@@ -242,22 +244,27 @@ class SideNavbar extends Component {
                 }}
                 ModalProps={{
                   keepMounted: true, // Better open performance on mobile.
-                }}>
+                }}
+              >
                 {drawer}
               </Drawer>
             </Hidden>
-            <Hidden xsDown implementation='css'>
+            <Hidden xsDown implementation="css">
               <Drawer
                 classes={{
                   paper: classes.drawerPaper,
                 }}
-                variant='permanent'
-                open>
+                variant="permanent"
+                open
+              >
                 {drawer}
               </Drawer>
             </Hidden>
           </nav>
-          <main className={classes.content}>{children}</main>
+          <main className={classes.contentArea}>
+            <Toolbar />
+            {children}
+          </main>
         </div>
       </React.Fragment>
     );

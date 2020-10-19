@@ -40,7 +40,7 @@ function App(props) {
     {
       if (loading) {
         return (
-          <div className='loading'>
+          <div className="loading">
             <ClipLoader size={60} color={"#123abc"} loading={loading} />
           </div>
         );
@@ -50,17 +50,17 @@ function App(props) {
     return (
       <React.Fragment>
         <BrowserRouter>
-          <div className='App'>
+          <div className="App">
             <SideNavbar>
               <Switch>
-                <Route exact path='/' component={Dashboard} />
-                <Route path='/statistics' component={Statistics} />
-                <Route path='/sales' component={Sales} />
-                <Route path='/resolution' component={Resolution} />
-                <Route path='/usermanagement' component={UserManagement} />
-                <Route path='/inventory' component={InventoryManagement} />
-                <Route path='/financial' component={FinancialManagement} />
-                <Route path='/settings' component={Settings} />
+                <Route exact path="/" component={Dashboard} />
+                <Route path="/statistics" component={Statistics} />
+                <Route path="/sales" component={Sales} />
+                <Route path="/resolution" component={Resolution} />
+                <Route path="/usermanagement" component={UserManagement} />
+                <Route path="/inventory" component={InventoryManagement} />
+                <Route path="/financial" component={FinancialManagement} />
+                <Route path="/settings" component={Settings} />
               </Switch>
             </SideNavbar>
           </div>
