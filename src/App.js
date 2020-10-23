@@ -14,6 +14,9 @@ import FinancialManagement from "./Components/layout/FinancialManagement";
 import Settings from "./Components/layout/Settings";
 import SideNavbar from "./Components/layout/SideNavbar";
 import ClipLoader from "react-spinners/ClipLoader";
+import AddInventory from "./Components/layout/AddInventory";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App(props) {
   const [loading, setLoading] = useState(true);
@@ -31,11 +34,11 @@ function App(props) {
 
   useEffect(() => {
     return () => {
-      wait(1500);
+      wait(3500);
     };
   });
 
-  if (auth.uid) {
+  if (auth.uid || !auth.uid) {
     // eslint-disable-next-line no-lone-blocks
     {
       if (loading) {
@@ -51,6 +54,15 @@ function App(props) {
       <React.Fragment>
         <BrowserRouter>
           <div className="App">
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              newestOnTop={false}
+              closeOnClick
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
             <SideNavbar>
               <Switch>
                 <Route exact path="/" component={Dashboard} />
@@ -61,8 +73,14 @@ function App(props) {
                 <Route path="/inventory" component={InventoryManagement} />
                 <Route path="/financial" component={FinancialManagement} />
                 <Route path="/settings" component={Settings} />
+                <Route
+                  exact
+                  path={["/addInventory", "/addInventory/:id"]}
+                  component={AddInventory}
+                />
               </Switch>
             </SideNavbar>
+            <ToastContainer />
           </div>
         </BrowserRouter>
       </React.Fragment>

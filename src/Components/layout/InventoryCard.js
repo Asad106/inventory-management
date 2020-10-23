@@ -13,10 +13,11 @@ const useStyles = makeStyles({
     maxWidth: 250,
   },
   media: {
-    height: 200,
+    height: 220,
   },
   pos: {
     marginBottom: 12,
+    maxHeight: 250,
   },
   cover: {
     objectFit: "cover",
@@ -35,16 +36,19 @@ export default function InventoryCard({ item }) {
           image={item.imageLink}
           title={item.title}
         />
-        <CardContent>
+        <CardContent style={{ backgroundColor: "#fcfbf7", borderTop: "40" }}>
           <Typography gutterBottom variant="h6" component="h6">
             {item.productName}
           </Typography>
           <div>
-            <Typography className={classes.pos} color="textSecondary">
-              {item.productType}" " {item.price}
+            <Typography className={classes.pos} color="primary">
+              Product Type: {item.productType}
             </Typography>
-            <Typography className={classes.pos} color="textSecondary">
-              {item.pricePerUnit}
+            <Typography className={classes.pos} color="primary">
+              Price: ${item.price}
+            </Typography>
+            <Typography className={classes.pos} color="primary">
+              Price per Unit: ${item.pricePerUnit}
             </Typography>
           </div>
         </CardContent>
@@ -60,3 +64,10 @@ export default function InventoryCard({ item }) {
     </Card>
   );
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getInventories: () => {
+      dispatch(GetInventory());
+    },
+  };
+};

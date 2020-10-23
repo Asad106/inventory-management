@@ -1,34 +1,26 @@
 import React, { useEffect } from "react";
-import { fade, makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import { Box } from "@material-ui/core";
+import InventoryData from "./InventoryData";
+import ListViewHeader from "../common/ListViewHeader";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { GetInventory } from "../../redux/actions/inventoryActions";
+import Pagination from "./Pagination";
 import {
-  Typography,
-  AppBar,
-  Popover,
-  Toolbar,
-  InputBase,
-  Box,
-  Fab,
-} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import AddIcon from "@material-ui/icons/Add";
-import InventoryCard from "./InventoryCard";
+  GetInventory,
+  DeleteInventory,
+  EditInventory,
+} from "../../redux/actions/inventoryActions";
 import { withStyles } from "@material-ui/core/styles";
 
 const Styles = (theme) => ({
   root: {
     flexGrow: 1,
+    color: "rgba(0, 0, 0, 0.54)",
   },
-  popover: {
-    pointerEvents: "none",
-  },
-  fab: {
-    position: "fixed",
-    top: 112,
-    right: 50,
+  header: {},
+  extendedIcon: {
+    marginRight: theme.spacing(0),
   },
   paper: {
     padding: theme.spacing(1),
@@ -38,15 +30,11 @@ const Styles = (theme) => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
+    border: "1px solid rgba(0, 0, 0, 0.12)",
+    backgroundColor: "#FFFFFF",
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
       width: "auto",
     },
   },
@@ -57,8 +45,7 @@ const Styles = (theme) => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end",
-    color: "grey",
+    justifyContent: "center",
   },
   inputRoot: {
     color: "inherit",
@@ -67,114 +54,111 @@ const Styles = (theme) => ({
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
     width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
     },
   },
 });
 
 function Inventory(props) {
   const { classes } = props;
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [showPerPage, setShowPerPage] = React.useState(5);
+  const [page, setPage] = React.useState(0);
+  const history = props.history;
+
+  const onEdit = (id) => {
+    console.log("id of an inventory" + id);
+    history.push(`/addInventory/${id}`);
+
+    // props.editInventories(id);
   };
 
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
+  const onDelete = (id) => {
+    props.deleteInventories(id);
+
+    props.getInventories(showPerPage, page);
   };
 
-  const open = Boolean(anchorEl);
+  const onPageChange = (e) => {
+    setShowPerPage(e.target.value);
+  };
+
+  const onBack = () => {
+    if (page === 0) return;
+    setPage(page - showPerPage);
+  };
+
+  const onForward = () => {
+    setPage(page + showPerPage);
+  };
+
+  const searchHandler = (e) => {
+    const searchValue = e.target.value;
+    console.log(searchValue);
+    // if (searchValue) {
+    //   const filterResult = props.inventories.filter((inventory) =>
+    //     inventory.productName.includes(searchValue)
+    //   );
+    //   setStateInventories(filterResult);
+    // } else {
+    //   setStateInventories(props.inventories);
+    // }
+  };
 
   useEffect(() => {
-    // props.getInventories();
-    props.getInventories();
+    props.getInventories(showPerPage, page);
   }, []);
-  console.log(props.inventories);
+  // console.log(props.inventories);
   return (
-    <Box mx={2}>
-      <Typography
-        variant={"h6"}
-        style={{ fontWeight: "bold" }}
-        className={classes.paper}
-      >
-        Inventory
-      </Typography>
-      <Grid container>
-        <Grid item>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
-        </Grid>
-        <Grid item>
-          <Fab
-            color="primary"
-            aria-label="add"
-            className={classes.fab}
-            aria-owns={open ? "mouse-over-popover" : undefined}
-            aria-haspopup="true"
-            onMouseEnter={handlePopoverOpen}
-            onMouseLeave={handlePopoverClose}
-          >
-            <AddIcon />
-          </Fab>
-          <Popover
-            id="mouse-over-popover"
-            className={classes.popover}
-            classes={{
-              paper: classes.paper,
-            }}
-            open={open}
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            onClose={handlePopoverClose}
-            disableRestoreFocus
-          >
-            <Typography>Add Inventory.</Typography>
-          </Popover>
-          <Toolbar />
-        </Grid>
-      </Grid>
-      <Grid container spacing={2}>
-        {props.inventories.map((val, index) => (
-          <Grid item md={4}>
-            <InventoryCard item={val} key={index} />
-          </Grid>
-        ))}
-      </Grid>
+    <Box mx={2} className={classes.root}>
+      <ListViewHeader
+        searchHandler={searchHandler}
+        title="Inventory Management"
+        btnLabel="Add Product"
+        btnLink="/addInventory"
+      />
+      <Box my={2}>
+        <InventoryData
+          inventories={props.inventories}
+          page={page}
+          showPerPage={showPerPage}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
+        <Pagination
+          dataSize={props.inventories.slice(page, page + showPerPage).length} // Slice will be removed when pagination from backend implemented
+          page={page}
+          onBack={onBack}
+          onForward={onForward}
+          showPerPage={showPerPage}
+          onPageChange={onPageChange}
+        />
+      </Box>
     </Box>
   );
 }
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    getInventories: () => {
-      dispatch(GetInventory());
+    getInventories: (limit, startAt) => {
+      dispatch(GetInventory(limit, startAt));
     },
+    deleteInventories: (id) => {
+      dispatch(DeleteInventory(id));
+    },
+    // editInventories: (id) => {
+    //   dispatch(EditInventory(id));
+    // },
   };
 };
-
 const mapStateToProps = (state) => {
   return {
     inventories: state.inventory.data,
+    // inventory : state.inventories
   };
 };
 

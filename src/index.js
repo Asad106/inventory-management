@@ -21,7 +21,6 @@ const reduxStore = createStore(
     reduxFirestore(fbConfig)
   )
 );
-
 ReactDOM.render(
   <Provider store={reduxStore}>
     <App />
