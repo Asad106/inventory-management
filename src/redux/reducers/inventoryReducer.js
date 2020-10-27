@@ -1,33 +1,39 @@
 /** @format */
 
-import { toast } from "react-toastify";
-
-const initialState = { data: [] };
+const initialState = { dataList: [], dataObj: {} };
 
 export const inventoryReducer = (state = initialState, action) => {
   switch (action.type) {
     case "GET_INVENTORIES":
-      console.log("Inventories");
       return {
         ...state,
-        data: action.data,
+        dataList: action.data,
       };
     case "ADD_INVENTORIES":
-      toast.success("Document Created");
       return {
         ...state,
-        data: action.data,
+        dataObj: action.data,
       };
     case "DELETE_INVENTORIES":
-      toast.warn("Document deleted");
       return {
         ...state,
       };
-    case "EDIT_INVENTORY":
-      toast.warn("Edit inventory here");
+    case "GET_INVENTORY":
       return {
         ...state,
-        data: action.data,
+        dataObj: action.data,
+        // dataRefresh: !action.data,
+      };
+    case "UPDATE_INVENTORY":
+      return {
+        ...state,
+        dataObj: action.data,
+      };
+    case "REFRESH":
+      return {
+        ...state,
+        dataObj: {},
+        dataList: [],
       };
 
     default:

@@ -7,9 +7,8 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import Pagination from "./Pagination";
 import {
-  GetInventory,
-  DeleteInventory,
-  EditInventory,
+  getInventories,
+  deleteInventory,
 } from "../../redux/actions/inventoryActions";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -69,17 +68,17 @@ function Inventory(props) {
   const [showPerPage, setShowPerPage] = React.useState(5);
   const [page, setPage] = React.useState(0);
   const history = props.history;
+  const [filterdata, setStateFilterData] = React.useState("");
 
   const onEdit = (id) => {
-    console.log("id of an inventory" + id);
+    // console.log("id of an inventory" + id);
     history.push(`/addInventory/${id}`);
 
     // props.editInventories(id);
   };
 
   const onDelete = (id) => {
-    props.deleteInventories(id);
-
+    props.deleteInventory(id);
     props.getInventories(showPerPage, page);
   };
 
@@ -98,15 +97,16 @@ function Inventory(props) {
 
   const searchHandler = (e) => {
     const searchValue = e.target.value;
-    console.log(searchValue);
-    // if (searchValue) {
-    //   const filterResult = props.inventories.filter((inventory) =>
-    //     inventory.productName.includes(searchValue)
-    //   );
-    //   setStateInventories(filterResult);
-    // } else {
-    //   setStateInventories(props.inventories);
-    // }
+    // console.log(searchValue);
+    if (searchValue) {
+      const filterResult = props.inventories.filter((inventory) => {
+        console.log(inventory);
+        return inventory.productName.toLowerCase().includes(searchValue);
+      });
+      setStateFilterData(filterResult);
+    } else {
+      setStateFilterData(props.inventories);
+    }
   };
 
   useEffect(() => {
@@ -145,20 +145,16 @@ function Inventory(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     getInventories: (limit, startAt) => {
-      dispatch(GetInventory(limit, startAt));
+      dispatch(getInventories(limit, startAt));
     },
-    deleteInventories: (id) => {
-      dispatch(DeleteInventory(id));
+    deleteInventory: (id) => {
+      dispatch(deleteInventory(id));
     },
-    // editInventories: (id) => {
-    //   dispatch(EditInventory(id));
-    // },
   };
 };
 const mapStateToProps = (state) => {
   return {
-    inventories: state.inventory.data,
-    // inventory : state.inventories
+    inventories: state.inventory.dataList,
   };
 };
 

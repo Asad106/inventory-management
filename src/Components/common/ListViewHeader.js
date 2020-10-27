@@ -56,7 +56,7 @@ function ListViewHeader({ title, btnLabel, btnLink, history, searchHandler }) {
               <SearchIcon />
             </div>
             <InputBase
-              onBlur={searchHandler}
+              onChange={searchHandler}
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,

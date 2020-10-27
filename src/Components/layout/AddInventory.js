@@ -3,24 +3,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import {
-  Box,
-  Card,
-  CardActions,
-  CardContent,
-  Typography,
-  Button,
-  Input,
-  Breadcrumbs,
-  Grid,
-  Container,
-} from "@material-ui/core";
+import { Box, Typography, Button, Grid, Container } from "@material-ui/core";
 import {
   addInventory,
   getInventoryById,
+  refreshControl,
+  updateInventoryById,
 } from "../../redux/actions/inventoryActions";
 import { withStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import ImageUpload from "../common/ImageUpload";
+import { toast } from "react-toastify";
 
 const Styles = (theme) => ({
   root: {
@@ -54,39 +46,58 @@ const Styles = (theme) => ({
 const AddInventory = (props) => {
   const id = props.match.params.id;
   const { classes } = props;
-  const [inventory, setInventory] = useState(
-    props.inventory !== null
-      ? props.inventory
-      : {
-          productName: "",
-          productType: "",
-          productPrice: 0.0,
-          pricePerUnit: 0.0,
-          unit: "",
-        }
-  );
+  let [inventory, setInventory] = useState({
+    productName: "",
+    productType: "",
+    price: 0.0,
+    pricePerUnit: 0.0,
+    unit: "",
+    imageLink: "",
+  });
+
   useEffect(() => {
     if (id) {
-      console.log(props);
-      const inventory = props.editInventory(id);
-      console.log("getting  single data " + inventory);
-      // const inventory = props.
+      props.getInventoryById(id);
     }
   }, [id]);
+
+  useEffect(() => {
+    if (props.inventory) {
+      setInventory(props.inventory);
+    }
+  }, [props.inventory]);
+  const handleCancel = () => {
+    props.refresh();
+    props.history.push("/inventory");
+  };
+
   const handleChange = (e) => {
-    const name = e.target.value;
-    console.log(name);
     setInventory({
       ...inventory,
       [e.target.name]: e.target.value,
     });
   };
   const handleSubmit = () => {
-    console.log(inventory);
-    props.submitInventory(inventory, props.history);
+    console.log(props.inventory);
+    handleValidations();
+    if (id) {
+      console.log("+++++++++++++++++++++++++++>>>>>>");
+      props.updateInventory(inventory, props.history, id);
+    } else {
+      console.log("-------------------------------->>>>>>");
+      props.submitInventory(inventory, props.history);
+    }
   };
-
-  console.log(props.inventory);
+  const handleValidations = () => {
+    if (
+      inventory.productName == "" ||
+      inventory.productType == "" ||
+      inventory.price < 0 ||
+      inventory.pricePerUnit < 0
+    ) {
+      return toast.error("please ender valid data of a product");
+    }
+  };
   return (
     <Box mx={2}>
       <Box className={classes.header} py={1} px={2}>
@@ -101,6 +112,7 @@ const AddInventory = (props) => {
               value={inventory.productName}
               variant="outlined"
               fullWidth
+              required
               onChange={handleChange}
               className={classes.inputField}
             />
@@ -112,6 +124,7 @@ const AddInventory = (props) => {
               value={inventory.productType}
               variant="outlined"
               fullWidth
+              required
               onChange={handleChange}
               className={classes.inputField}
             />
@@ -119,11 +132,12 @@ const AddInventory = (props) => {
           <Grid item>
             <TextField
               label="Product Price"
-              name="productPrice"
-              value={inventory.productPrice}
+              name="price"
+              value={inventory.price}
               type="number"
               variant="outlined"
               fullWidth
+              required
               onChange={handleChange}
               className={classes.inputField}
             />
@@ -136,6 +150,7 @@ const AddInventory = (props) => {
               type="number"
               variant="outlined"
               fullWidth
+              required
               onChange={handleChange}
               className={classes.inputField}
             />
@@ -147,10 +162,15 @@ const AddInventory = (props) => {
               label="Unit"
               variant="outlined"
               fullWidth
+              required
               onChange={handleChange}
               className={classes.inputField}
             />
+            <Grid item>
+              <ImageUpload image={inventory.imageLink} />
+            </Grid>
           </Grid>
+
           <Grid
             container
             justify="center"
@@ -158,21 +178,28 @@ const AddInventory = (props) => {
             style={{ marginTop: "10px" }}
           >
             <Grid item>
-              <Button
-                variant="contained"
-                onClick={() => props.history.push("/inventory")}
-              >
+              <Button variant="contained" onClick={handleCancel}>
                 Cancel
               </Button>
             </Grid>
             <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSubmit}
-              >
-                Save
-              </Button>
+              {id ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                >
+                  update
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                >
+                  save
+                </Button>
+              )}
             </Grid>
           </Grid>
         </Grid>
@@ -180,9 +207,10 @@ const AddInventory = (props) => {
     </Box>
   );
 };
+
 const mapStateToProps = (state) => {
   return {
-    inventory: state.inventory.data,
+    inventory: state.inventory.dataObj,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -190,8 +218,14 @@ const mapDispatchToProps = (dispatch) => {
     submitInventory: (inventory, history) => {
       dispatch(addInventory(inventory, history));
     },
-    editInventory: (id) => {
+    getInventoryById: (id) => {
       dispatch(getInventoryById(id));
+    },
+    updateInventory: (inventory, history, id) => {
+      dispatch(updateInventoryById(inventory, history, id));
+    },
+    refresh: () => {
+      dispatch(refreshControl());
     },
   };
 };
