@@ -84,6 +84,7 @@ function Inventory(props) {
 
   const onPageChange = (e) => {
     setShowPerPage(e.target.value);
+    setPage(0);
   };
 
   const onBack = () => {
@@ -97,12 +98,13 @@ function Inventory(props) {
 
   const searchHandler = (e) => {
     const searchValue = e.target.value;
+    setPage(0);
     // console.log(searchValue);
     if (searchValue) {
-      const filterResult = props.inventories.filter((inventory) => {
-        console.log(inventory);
-        return inventory.productName.toLowerCase().includes(searchValue);
-      });
+      const filterResult = props.inventories.filter((inventory) =>
+        inventory.productName.toLowerCase().includes(searchValue)
+      );
+
       setStateFilterData(filterResult);
     } else {
       setStateFilterData(props.inventories);
@@ -123,7 +125,7 @@ function Inventory(props) {
       />
       <Box my={2}>
         <InventoryData
-          inventories={props.inventories}
+          inventories={filterdata ? filterdata : props.inventories}
           page={page}
           showPerPage={showPerPage}
           onDelete={onDelete}

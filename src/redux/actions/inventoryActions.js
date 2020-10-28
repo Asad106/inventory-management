@@ -3,8 +3,6 @@
 export const getInventories = (limit, startAt) => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
-    // console.log("LIMIT " + limit);
-    // console.log("startAt " + startAt);
     firebase
       .firestore()
       .collection("inventory")

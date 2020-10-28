@@ -1,6 +1,6 @@
 /** @format */
 
-const initState = { authError: null };
+const initState = { authError: null, authList: [], authObj: {} };
 
 const authReducer = (state = initState, action) => {
   switch (action.type) {
@@ -19,7 +19,9 @@ const authReducer = (state = initState, action) => {
       console.log("Login Error");
       //console.log(action.err.code);
       return { ...state, authError: action.err.code };
-
+    case "GET_USERS":
+      //console.log(action.err.code);
+      return { ...state, authList: action.data };
     default:
       return state;
   }

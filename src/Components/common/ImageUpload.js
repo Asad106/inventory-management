@@ -1,12 +1,12 @@
-import { Button, TextField } from "@material-ui/core";
+import { Button, Input, TextField } from "@material-ui/core";
 import React, { useState, Component } from "react";
 import firebase from "../../config/fbConfig";
 
 const storage = firebase.storage();
 
-function ImageUpload({ image }) {
+function ImageUpload({ imageHandler }) {
   const [state, setState] = useState({
-    image: image,
+    image: "",
     imageLink: "",
     progress: 0,
   });
@@ -41,10 +41,11 @@ function ImageUpload({ image }) {
           .ref("images")
           .child(image.name)
           .getDownloadURL()
-          .then((ImageLink) => {
+          .then((imageLink) => {
             console.log("++++++++++++++++++++++++++++++++++++++++++++++");
-            console.log(ImageLink);
-            setState({ ImageLink });
+            console.log(imageLink);
+            setState({ ...state, imageLink });
+            imageHandler(imageLink);
           });
       }
     );
@@ -55,25 +56,25 @@ function ImageUpload({ image }) {
       style={{
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
         alignItems: "center",
       }}
     >
-      <input
+      <Input
         name={state.image}
         type="file"
         onChange={handleChange}
-        style={{ marginTop: 10, paddingRight: 20 }}
+        // style={{ marginTop: 10, paddingRight: 5 }}
       />
-      <button
+      <Button
         variant="contained"
-        color="primary"
+        color="default"
         size="small"
-        style={{ marginTop: 10, paddingRight: 20 }}
-        onClick={handleUpload}
+        style={{ marginTop: 10, paddingRight: 5 }}
+        // onClick={handleUpload}
       >
         upload image
-      </button>
+      </Button>
       {/* <progress
           value={this.state.progress}
           max="100"

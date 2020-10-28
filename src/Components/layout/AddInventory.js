@@ -54,7 +54,9 @@ const AddInventory = (props) => {
     unit: "",
     imageLink: "",
   });
-
+  const setImageLink = (imageLink) => {
+    setInventory({ ...inventory, imageLink });
+  };
   useEffect(() => {
     if (id) {
       props.getInventoryById(id);
@@ -98,6 +100,7 @@ const AddInventory = (props) => {
       return toast.error("please ender valid data of a product");
     }
   };
+  console.log(inventory);
   return (
     <Box mx={2}>
       <Box className={classes.header} py={1} px={2}>
@@ -167,7 +170,7 @@ const AddInventory = (props) => {
               className={classes.inputField}
             />
             <Grid item>
-              <ImageUpload image={inventory.imageLink} />
+              <ImageUpload imageHandler={setImageLink} />
             </Grid>
           </Grid>
 

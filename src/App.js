@@ -15,6 +15,7 @@ import Settings from "./Components/layout/Settings";
 import SideNavbar from "./Components/layout/SideNavbar";
 import ClipLoader from "react-spinners/ClipLoader";
 import AddInventory from "./Components/layout/AddInventory";
+import AddUser from "./Components/layout/AddUser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -77,6 +78,11 @@ function App(props) {
                   exact
                   path={["/addInventory", "/addInventory/:id"]}
                   component={AddInventory}
+                />
+                <Route
+                  exact
+                  path={["/adduser", "/adduser/:id"]}
+                  component={AddUser}
                 />
               </Switch>
             </SideNavbar>

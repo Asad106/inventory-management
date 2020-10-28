@@ -1,101 +1,132 @@
 /** @format */
 
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import { Link, NavLink } from "react-router-dom";
-const userList = [
-  {
-    id: 1,
-  },
-];
+import React, { useEffect } from "react";
+import ListViewHeader from "../common/ListViewHeader";
+import { Box } from "@material-ui/core";
+import UserData from "./UserData";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import Pagination from "./Pagination";
+import { getUsers } from "../../redux/actions/userActions";
+import { withStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const Styles = (theme) => ({
   root: {
-    display: "flex",
-    "& > *": {
-      margin: theme.spacing(1),
+    flexGrow: 1,
+    color: "rgba(0, 0, 0, 0.54)",
+  },
+  header: {},
+  extendedIcon: {
+    marginRight: theme.spacing(0),
+  },
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: "left",
+    color: theme.palette.text.secondary,
+  },
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    border: "1px solid rgba(0, 0, 0, 0.12)",
+    backgroundColor: "#FFFFFF",
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "auto",
     },
   },
-  small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  large: {
-    width: theme.spacing(8),
-    height: theme.spacing(8),
+  inputRoot: {
+    color: "inherit",
   },
-}));
-function UserManagement() {
-  const classes = useStyles();
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+});
+
+function UserManagement(props) {
+  const { classes } = props;
+  const [showPerPage, setShowPerPage] = React.useState(5);
+  const [page, setPage] = React.useState(0);
+  const history = props.history;
+
+  useEffect(() => {
+    props.getUsers();
+    console.log("ghjkljhgf" + props.users);
+  }, []);
+  const onPageChange = (e) => {
+    setShowPerPage(e.target.value);
+    setPage(0);
+  };
+
+  const onBack = () => {
+    if (page === 0) return;
+    setPage(page - showPerPage);
+  };
+
+  const onForward = () => {
+    setPage(page + showPerPage);
+  };
   return (
-    <div>
-      <h4 className='center grey-text text-darken-3'>User Management</h4>
-
-      <div className='divider'></div>
-      <Link className='link' to='/'>
-        <div className='user-container'>
-          <div className='display-container'>
-            <Avatar
-              alt='T'
-              src='/static/images/avatar/1.jpg'
-              className={classes.large}
-            />
-          </div>
-          <div className='user-content'>
-            <h5>Tarun Kumar</h5>
-            <p>tkumar@gmail.com</p>
-            <p>Last signed in time : 24 September, 5PM</p>
-          </div>
-          <div className=''>
-            <button>Block</button>
-          </div>
-        </div>
-      </Link>
-
-      <div className='divider'></div>
-      <Link className='link' to='/'>
-        <div className='user-container'>
-          <div className='display-container'>
-            <Avatar
-              alt='D'
-              src='/static/images/avatar/1.jpg'
-              className={classes.large}
-            />
-          </div>
-          <div className='user-content'>
-            <h5>David Batero</h5>
-            <p>dbatero@live.com</p>
-            <p>Last signed in time : 2nd September, 2AM</p>
-          </div>
-          <div>
-            <button>Block</button>
-          </div>
-        </div>
-      </Link>
-
-      <div className='divider'></div>
-      <Link className='link' to='/'>
-        <div className='user-container'>
-          <div className='display-container'>
-            <Avatar
-              alt='J'
-              src='/static/images/avatar/1.jpg'
-              className={classes.large}
-            />
-          </div>
-          <div className='user-content'>
-            <h5>John Doe</h5>
-            <p>John_Doe@gmail.com</p>
-            <p>Last signed in time : 10 October, 10AM</p>
-          </div>
-          <div>
-            <button>Block</button>
-          </div>
-        </div>
-      </Link>
-    </div>
+    <Box mx={2} className={classes.root}>
+      <ListViewHeader
+        // searchHandler={searchHandler}
+        title="User Management"
+        btnLabel="Add User"
+        btnLink="/addUser"
+      />
+      <Box my={2}>
+        <UserData
+          users={props.users}
+          page={page}
+          showPerPage={showPerPage}
+          // onDelete={onDelete}
+          // onEdit={onEdit}
+        />
+        <Pagination
+          dataSize={props.users.slice(page, page + showPerPage).length} // Slice will be removed when pagination from backend implemented
+          page={page}
+          onBack={onBack}
+          onForward={onForward}
+          showPerPage={showPerPage}
+          onPageChange={onPageChange}
+        />
+      </Box>
+    </Box>
   );
 }
 
-export default UserManagement;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUsers: () => {
+      dispatch(getUsers());
+    },
+  };
+};
+const mapStateToProps = (state) => {
+  return {
+    users: state.user.userList,
+  };
+};
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withStyles(Styles)
+)(UserManagement);
