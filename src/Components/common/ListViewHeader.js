@@ -57,7 +57,7 @@ function ListViewHeader({ title, btnLabel, btnLink, history, searchHandler }) {
             </div>
             <InputBase
               onBlur={searchHandler}
-              placeholder="Search…"
+              placeholder="Search by Name"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -66,6 +66,7 @@ function ListViewHeader({ title, btnLabel, btnLink, history, searchHandler }) {
             />
           </div>
         </Grid>
+        {}
         <Grid item>
           <Button
             variant="outlined"

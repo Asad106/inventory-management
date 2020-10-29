@@ -32,20 +32,21 @@ function UserData(props) {
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="Inventory-table">
-        <TableHead style={{ backgroundColor: "lightgrey" }}>
+        <TableHead style={{ borderWidth: "2px solid grey " }}>
           <TableRow>
             <TableCell> Name</TableCell>
             <TableCell>Phone #</TableCell>
             <TableCell>Address</TableCell>
 
-            <TableCell>Image</TableCell>
             <TableCell>Status</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Image</TableCell>
             <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.users
-            .slice(props.page, props.page + props.showPerPage)
+            .slice(props.page, props.page + props.showPerPage) // slice method will change with backend pagination
             .map((item, index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="row">
@@ -53,25 +54,19 @@ function UserData(props) {
                 </TableCell>
                 <TableCell>{item.phoneNo}</TableCell>
                 <TableCell>{item.address}</TableCell>
-                <TableCell align="center">
-                  <div>
-                    <img className={classes.cover} src={item.image} />
-                  </div>
-                </TableCell>
+
+                <TableCell>{item.status}</TableCell>
+                <TableCell>{item.email}</TableCell>
                 <TableCell>
-                  <Checkbox
-                    name="checked"
-                    size={"small"}
-                    value={item.status}
-                    onChange={handleCheck}
-                    inputProps={{ "aria-label": "primary checkbox" }}
-                  />
+                  <div>
+                    <img className={classes.cover} src={item.imageLink} />
+                  </div>
                 </TableCell>
                 <TableCell align="center">
                   <IconButton
-                    aria-label="delete"
+                    aria-label="edit"
                     color="primary"
-                    // onClick={() => props.onEdit(item.id)}
+                    onClick={() => props.onEdit(item.id)}
                   >
                     <EditIcon fontSize="small" />
                   </IconButton>

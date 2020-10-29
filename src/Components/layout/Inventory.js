@@ -90,10 +90,12 @@ function Inventory(props) {
   const onBack = () => {
     if (page === 0) return;
     setPage(page - showPerPage);
+    // limit = limit - 20;
   };
 
   const onForward = () => {
     setPage(page + showPerPage);
+    // limit = limit + 20;
   };
 
   const searchHandler = (e) => {

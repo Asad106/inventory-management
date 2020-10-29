@@ -71,7 +71,7 @@ function ImageUpload({ imageHandler }) {
         color="default"
         size="small"
         style={{ marginTop: 10, paddingRight: 5 }}
-        // onClick={handleUpload}
+        onClick={handleUpload}
       >
         upload image
       </Button>

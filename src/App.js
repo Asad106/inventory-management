@@ -15,9 +15,9 @@ import Settings from "./Components/layout/Settings";
 import SideNavbar from "./Components/layout/SideNavbar";
 import ClipLoader from "react-spinners/ClipLoader";
 import AddInventory from "./Components/layout/AddInventory";
-import AddUser from "./Components/layout/AddUser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddUser from "./Components/layout/AddUser";
 
 function App(props) {
   const [loading, setLoading] = useState(true);
@@ -39,7 +39,7 @@ function App(props) {
     };
   });
 
-  if (auth.uid || !auth.uid) {
+  if (auth.uid) {
     // eslint-disable-next-line no-lone-blocks
     {
       if (loading) {

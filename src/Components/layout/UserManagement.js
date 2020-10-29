@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ListViewHeader from "../common/ListViewHeader";
 import { Box } from "@material-ui/core";
 import UserData from "./UserData";
@@ -65,40 +65,55 @@ function UserManagement(props) {
   const { classes } = props;
   const [showPerPage, setShowPerPage] = React.useState(5);
   const [page, setPage] = React.useState(0);
+  const [filterdata, setFilterData] = useState("");
   const history = props.history;
 
   useEffect(() => {
     props.getUsers();
-    console.log("ghjkljhgf" + props.users);
   }, []);
   const onPageChange = (e) => {
     setShowPerPage(e.target.value);
     setPage(0);
   };
-
+  const onEdit = (id) => {
+    console.log("id of an user" + id);
+    history.push(`/adduser/${id}`);
+  };
   const onBack = () => {
     if (page === 0) return;
     setPage(page - showPerPage);
   };
-
   const onForward = () => {
     setPage(page + showPerPage);
+  };
+  const searchHandler = (e) => {
+    const searchValue = e.target.value;
+    setPage(0);
+    if (searchValue) {
+      const filterResult = props.users.filter((user) =>
+        user.name.toLowerCase().includes(searchValue)
+      );
+
+      setFilterData(filterResult);
+    } else {
+      setFilterData(props.users);
+    }
   };
   return (
     <Box mx={2} className={classes.root}>
       <ListViewHeader
-        // searchHandler={searchHandler}
+        searchHandler={searchHandler}
         title="User Management"
         btnLabel="Add User"
         btnLink="/addUser"
       />
       <Box my={2}>
         <UserData
-          users={props.users}
+          users={filterdata ? filterdata : props.users}
           page={page}
           showPerPage={showPerPage}
           // onDelete={onDelete}
-          // onEdit={onEdit}
+          onEdit={onEdit}
         />
         <Pagination
           dataSize={props.users.slice(page, page + showPerPage).length} // Slice will be removed when pagination from backend implemented

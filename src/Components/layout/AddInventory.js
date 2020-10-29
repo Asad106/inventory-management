@@ -45,6 +45,7 @@ const Styles = (theme) => ({
 
 const AddInventory = (props) => {
   const id = props.match.params.id;
+  console.log(props.match.params);
   const { classes } = props;
   let [inventory, setInventory] = useState({
     productName: "",

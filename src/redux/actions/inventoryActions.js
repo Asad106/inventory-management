@@ -8,7 +8,7 @@ export const getInventories = (limit, startAt) => {
       .collection("inventory")
       .orderBy("productName")
       .startAt(startAt)
-      .limit(50)
+      .limit(limit)
       .get()
       .then((querySnapshot) => {
         let inventories = [];
