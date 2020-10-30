@@ -36,7 +36,7 @@ export const addUser = (user, history) => {
       .then((res) => {
         dispatch({ type: "ADD_USER" });
         refreshControl();
-        history.push("/userManagement");
+        history.push("/user");
       })
       .catch((err) => {
         console.log("error while adding", err);
@@ -72,7 +72,7 @@ export const updateUserById = (user, history, id) => {
       .update({ ...user })
       .then((res) => {
         refreshControl();
-        history.push("/userMangement");
+        history.push("/user");
         // getUsers();
       })
       .catch((err) => {

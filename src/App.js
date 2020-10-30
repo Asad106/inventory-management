@@ -70,7 +70,7 @@ function App(props) {
                 <Route path="/statistics" component={Statistics} />
                 <Route path="/sales" component={Sales} />
                 <Route path="/resolution" component={Resolution} />
-                <Route path="/usermanagement" component={UserManagement} />
+                <Route path="/user" component={UserManagement} />
                 <Route path="/inventory" component={InventoryManagement} />
                 <Route path="/financial" component={FinancialManagement} />
                 <Route path="/settings" component={Settings} />

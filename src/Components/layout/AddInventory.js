@@ -81,8 +81,8 @@ const AddInventory = (props) => {
     });
   };
   const handleSubmit = () => {
-    console.log(props.inventory);
-    handleValidations();
+    // console.log(props.inventory);
+    // handleValidations();
     if (id) {
       console.log("+++++++++++++++++++++++++++>>>>>>");
       props.updateInventory(inventory, props.history, id);

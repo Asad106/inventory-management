@@ -87,8 +87,7 @@ const AddUser = (props) => {
 
   const handleCancel = (e) => {
     props.refresh();
-    console.log(props.history);
-    props.history.push("/userManagement");
+    props.history.push("/user");
   };
 
   const handleChange = (e) => {
@@ -99,9 +98,11 @@ const AddUser = (props) => {
   };
   const handleSubmit = () => {
     if (id) {
+      console.log("user should be apdated");
       props.updateUser(user, props.history, id);
+    } else {
+      props.submitUser(user, props.history);
     }
-    props.submitUser(user, props.history);
   };
   return (
     <Box mx={2}>

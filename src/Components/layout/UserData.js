@@ -24,11 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function UserData(props) {
-  const { checked, setChecked } = React.useState(true);
   const classes = useStyles();
-  const handleCheck = (event) => {
-    setChecked({ [event.target.name]: event.target.checked });
-  };
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="Inventory-table">
@@ -70,13 +66,6 @@ function UserData(props) {
                   >
                     <EditIcon fontSize="small" />
                   </IconButton>
-                  {/* <IconButton
-                  aria-label="delete"
-                  color="secondary"
-                  // onClick={() => props.onDelete(item.id)}
-                >
-                  <DeleteIcon fontSize="small" />
-                </IconButton> */}
                 </TableCell>
               </TableRow>
             ))}

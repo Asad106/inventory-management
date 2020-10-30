@@ -102,13 +102,13 @@ const itemList2 = [
     id: 5,
     text: "User Management",
     icon: <People />,
-    url: "/Usermanagement",
+    url: "/user",
   },
   {
     id: 6,
     text: "Inventory Management",
     icon: <StoreMallDirectory />,
-    url: "/Inventory",
+    url: "/inventory",
   },
   {
     id: 7,
