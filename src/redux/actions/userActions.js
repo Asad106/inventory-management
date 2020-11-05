@@ -80,3 +80,24 @@ export const updateUserById = (user, history, id) => {
       });
   };
 };
+
+export const getActiveUsers = () => {
+  console.log("in action hy");
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    firebase
+      .firestore()
+      .collection("users")
+      // .orderBy("status")
+      .where("status", "==", "Active")
+      .get()
+      .then((querySnapshot) => {
+        let users = [];
+        querySnapshot.forEach((doc) => {
+          users.push({ ...doc.data(), id: doc.id });
+        });
+        dispatch({ type: "USER_STATUS", data: users });
+        // console.log("Users are", users);
+      });
+  };
+};

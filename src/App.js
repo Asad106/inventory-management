@@ -18,6 +18,8 @@ import AddInventory from "./Components/layout/AddInventory";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddUser from "./Components/layout/AddUser";
+import Orders from "./Components/layout/Orders"
+import Transactions from "./Components/layout/Transactions"
 
 function App(props) {
   const [loading, setLoading] = useState(true);
@@ -74,6 +76,9 @@ function App(props) {
                 <Route path="/inventory" component={InventoryManagement} />
                 <Route path="/financial" component={FinancialManagement} />
                 <Route path="/settings" component={Settings} />
+                <Route path="/orders" component={Orders} />
+                <Route path="/transactions" component={Transactions} />
+
                 <Route
                   exact
                   path={["/addInventory", "/addInventory/:id"]}

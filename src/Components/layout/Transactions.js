@@ -1,15 +1,50 @@
+// import React from "react";
+// import {
+//     Container,
+//     Row,
+//     Col,
+//     Tab,
+//     Tabs,
+//     Table,
+//     Card,
+//     Image,
+//     Modal,
+//     Button,
+//     Form,
+//     InputGroup,
+//     Spinner,
+//   } from "react-bootstrap";
+
+//   class Orders extends React.Component {
+//     constructor() {
+//       super();
+  
+//       this.state = {
+//     };
+
+// }
+// render() {
+//     return (
+        
+//     );
+// }
+// }
+
+// export default Orders;
+
+
+
 /** @format */
 
 import React, { useEffect, useState } from "react";
-// import ListViewHeader from "../common/ListViewHeader";
+import ListViewHeaderWithoutAddButton from "../common/ListViewHeaderWithoutAddButton";
 import { Box } from "@material-ui/core";
-import UserData from "./UserData";
+import TransactionsData from "./TransactionsData";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import Pagination from "./Pagination";
-import { getUsers } from "../../redux/actions/userActions";
+import { getTransactions } from "../../redux/actions/transactionActions";
 import { withStyles } from "@material-ui/core/styles";
-import ListViewHeaderWithoutAddButton from "../common/ListViewHeaderWithoutAddButton";
 
 const Styles = (theme) => ({
   root: {
@@ -62,7 +97,7 @@ const Styles = (theme) => ({
   },
 });
 
-function UserManagement(props) {
+function Transactions(props) {
   const { classes } = props;
   const [showPerPage, setShowPerPage] = React.useState(5);
   const [page, setPage] = React.useState(0);
@@ -70,16 +105,16 @@ function UserManagement(props) {
   const history = props.history;
 
   useEffect(() => {
-    props.getUsers();
+    props.getTransactions();
   }, []);
   const onPageChange = (e) => {
     setShowPerPage(e.target.value);
     setPage(0);
   };
-  const onEdit = (id) => {
-    console.log("id of an user" + id);
-    history.push(`/adduser/${id}`);
-  };
+  // const onEdit = (id) => {
+  //   console.log("id of an user" + id);
+  //   history.push(`/adduser/${id}`);
+  // };
   const onBack = () => {
     if (page === 0) return;
     setPage(page - showPerPage);
@@ -91,33 +126,33 @@ function UserManagement(props) {
     const searchValue = e.target.value;
     setPage(0);
     if (searchValue) {
-      const filterResult = props.users.filter((user) =>
-        user.name.toLowerCase().includes(searchValue)
+      const filterResult = props.transactions.filter((transaction) =>
+        transaction.method.includes(searchValue)
       );
 
       setFilterData(filterResult);
     } else {
-      setFilterData(props.users);
+      setFilterData(props.transactions);
     }
   };
   return (
     <Box mx={2} className={classes.root}>
       <ListViewHeaderWithoutAddButton
         searchHandler={searchHandler}
-        title="User Management"
+        title="Transactions"
         // btnLabel="Add User"
         // btnLink="/addUser"
       />
       <Box my={2}>
-        <UserData
-          users={filterdata ? filterdata : props.users}
+        <TransactionsData
+          transactions={filterdata ? filterdata : props.transactions}
           page={page}
           showPerPage={showPerPage}
           // onDelete={onDelete}
-          onEdit={onEdit}
+          // onEdit={onEdit}
         />
         <Pagination
-          dataSize={props.users.slice(page, page + showPerPage).length} // Slice will be removed when pagination from backend implemented
+          dataSize={props.transactions.slice(page, page + showPerPage).length} // Slice will be removed when pagination from backend implemented
           page={page}
           onBack={onBack}
           onForward={onForward}
@@ -131,18 +166,18 @@ function UserManagement(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUsers: () => {
-      dispatch(getUsers());
+    getTransactions: () => {
+      dispatch(getTransactions());
     },
   };
 };
 const mapStateToProps = (state) => {
   return {
-    users: state.user.userList,
+    transactions: state.transaction.transactionlist,
   };
 };
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(Styles)
-)(UserManagement);
+)(Transactions);

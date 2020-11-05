@@ -112,6 +112,18 @@ const itemList2 = [
   },
   {
     id: 7,
+    text: "Orders",
+    icon: <StoreMallDirectory />,
+    url: "/orders",
+  },
+  {
+    id: 8,
+    text: "Transactions",
+    icon: <StoreMallDirectory />,
+    url: "/transactions",
+  },
+  {
+    id: 9,
     text: "Finanical Management",
     icon: <AttachMoney />,
     url: "/Financial",
