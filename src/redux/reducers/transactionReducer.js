@@ -8,6 +8,8 @@ const transactionReducer = (state = initState, action) => {
       return { ...state, transactionlist: action.data };
     case "TRANSACTION_DATE":
       return { ...state, transactionlist: action.data };
+    case "TRANSACTION_FILTER_BY_DATE":
+      return { ...state, transactionlist: action.data };
     case "REFRESH":
       return {
         ...state,

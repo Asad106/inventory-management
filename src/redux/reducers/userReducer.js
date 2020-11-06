@@ -19,6 +19,9 @@ const userReducer = (state = initState, action) => {
         ...state,
         userObj: action.data,
       };
+    case "USER_STATUS":
+      //console.log(action.err.code);
+      return { ...state, userList: action.data };
     case "REFRESH":
       return {
         ...state,

@@ -1,8 +1,10 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import AsyncCSV from "./GeneratePdf";
-import ListViewHeaderWithoutAddButton from "../common/ListViewHeaderWithoutAddButton";
+import TransactionReport from "./TransactionReport";
 import {
   Box,
   Button,
@@ -17,7 +19,8 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { getOrders } from "../../redux/actions/orderActions";
+import { getFilterOrder } from "../../redux/actions/orderActions";
+import { getFilterTransaction } from "../../redux/actions/transactionActions";
 
 const Styles = (theme) => ({
   root: {
@@ -36,15 +39,23 @@ const Styles = (theme) => ({
 });
 function Sales(props) {
   const { classes } = props;
-  const [age, setAge] = React.useState("");
+  let [type, setType] = React.useState("orders");
   const [open, setOpen] = React.useState(false);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   useEffect(() => {
-    props.getOrders();
-  }, []);
-  console.log(props.orders);
+    props.getOrders(startDate, endDate);
+  }, [startDate, endDate]);
+  // useEffect(() => {
+  //   props.getOrders(startDate, endDate);
+  // }, []);
+  useEffect(() => {
+    props.getTransactions(startDate, endDate);
+  }, [startDate, endDate]);
+  console.log("asasaass" + startDate, "sasasasas" + endDate);
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setType(event.target.value);
   };
 
   const handleClose = () => {
@@ -59,7 +70,7 @@ function Sales(props) {
       <Typography variant="h6" style={{ paddingBottom: "10px" }}>
         Sales & Reports
       </Typography>
-      <Container style={{ width: "50%" }}>
+      <Container style={{ width: "63%" }}>
         <Grid
           container
           px={5}
@@ -70,22 +81,33 @@ function Sales(props) {
             backgroundColor: "#FFFFFF",
             marginTop: 20,
             flexDirection: "column",
+            borderRadius: 20,
           }}
         >
-          <Grid item sm={12} md={12} px={5}>
+          <Grid
+            item
+            sm={12}
+            md={12}
+            px={3}
+            style={{ justifyContent: "center", textAlign: "center" }}
+          >
             <Typography
               style={{
-                paddingLeft: "30%",
+                // paddingLeft: "30%",
                 fontSize: 16,
-                paddingTop: 10,
+                padding: 10,
                 fontWeight: "bold",
               }}
             >
               Generate Reports
             </Typography>
           </Grid>
-          <Grid item px={4}>
-            <div style={{ justifyContent: "center", paddingLeft: "30%" }}>
+          <Grid
+            item
+            px={4}
+            style={{ justifyContent: "center", textAlign: "center" }}
+          >
+            <div style={{ textAlign: "center" }}>
               <Button
                 variant="primary"
                 className={classes.button}
@@ -101,34 +123,112 @@ function Sales(props) {
                   open={open}
                   onClose={handleClose}
                   onOpen={handleOpen}
-                  value={age}
+                  value={type}
                   onChange={handleChange}
                   fullWidth
                 >
-                  <MenuItem value="">
-                    <em>Get Reports Here ...</em>
+                  <MenuItem value={"orders"}>Orders Report</MenuItem>
+                  <MenuItem value={"transactions"}>
+                    Transactions Report
                   </MenuItem>
-                  <MenuItem value={10}>Orders Report</MenuItem>
-                  <MenuItem value={20}>Transactions Report</MenuItem>
-                  <MenuItem value={30}>Users Report</MenuItem>
+                  <MenuItem value={"users"}>Users Report</MenuItem>
                 </Select>
               </FormControl>
             </div>
           </Grid>
-          <Grid
-            item
-            px={4}
-            style={{ justifyContent: "center", paddingLeft: "25%" }}
-          >
-            <Button
-              variant="outlined"
-              className={classes.button}
-              onClick={handleOpen}
-              style={{ marginBottom: 10 }}
-            >
-              <AsyncCSV data={props.orders} />
-            </Button>
+          <Grid item style={{ justifyContent: "center", textAlign: "center" }}>
+            <Typography>From : </Typography>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              // isClearable
+              showYearDropdown
+              required
+              scrollableYearDropdown
+              style={{ borderColor: "lightGrey" }}
+            />
+            <Typography>To : </Typography>
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              // isClearable
+              required
+              showYearDropdown
+              scrollableYearDropdown
+              style={{ borderColor: "lightGrey" }}
+            />
           </Grid>
+          {
+            (() => {
+              if (type === "orders")
+                return (
+                  <Grid
+                    item
+                    px={4}
+                    style={{ justifyContent: "center", paddingLeft: "25%" }}
+                  >
+                    <Button
+                      variant="outlined"
+                      className={classes.button}
+                      onClick={handleOpen}
+                      style={{ marginBottom: 10 }}
+                    >
+                      <AsyncCSV data={props.orders} />
+                    </Button>
+                  </Grid>
+                );
+              if (type === "transactions")
+                return (
+                  <Grid
+                    item
+                    px={4}
+                    style={{ justifyContent: "center", textAlign: "center" }}
+                  >
+                    <Button
+                      variant="outlined"
+                      className={classes.button}
+                      onClick={handleOpen}
+                      style={{ marginBottom: 10 }}
+                    >
+                      <TransactionReport data={props.transactions} />
+                    </Button>
+                  </Grid>
+                );
+              else type = "users";
+              return <span>Three</span>;
+            })()
+            // (type = "orders" ? (
+            //   <Grid
+            //     item
+            //     px={4}
+            //     style={{ justifyContent: "center", paddingLeft: "25%" }}
+            //   >
+            //     <Button
+            //       variant="outlined"
+            //       className={classes.button}
+            //       onClick={handleOpen}
+            //       style={{ marginBottom: 10 }}
+            //     >
+            //       <AsyncCSV data={props.orders} />
+            //     </Button>
+            //   </Grid>
+            // ) : (
+            //   <Grid
+            //     item
+            //     px={4}
+            //     style={{ justifyContent: "center", paddingLeft: "25%" }}
+            //   >
+            //     <Button
+            //       variant="filled"
+            //       className={classes.button}
+            //       onClick={handleOpen}
+            //       style={{ marginBottom: 10 }}
+            //     >
+            //       <TransactionReport data={props.transactions} />
+            //     </Button>
+            //   </Grid>
+            // ))
+          }
         </Grid>
       </Container>
     </Box>
@@ -137,14 +237,18 @@ function Sales(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getOrders: () => {
-      dispatch(getOrders());
+    getOrders: (startDate, endDate) => {
+      dispatch(getFilterOrder(startDate, endDate));
+    },
+    getTransactions: (startDate, endDate) => {
+      dispatch(getFilterTransaction(startDate, endDate));
     },
   };
 };
 const mapStateToProps = (state) => {
   return {
     orders: state.order.orderlist,
+    transactions: state.transaction.transactionlist,
   };
 };
 

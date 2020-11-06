@@ -8,8 +8,10 @@ const orderReducers = (state = initState, action) => {
       //console.log(action.err.code);
       return { ...state, orderlist: action.data };
     case "GET_TRANSACTION_FOR_ORDER":
-      return {...state, orderObj:action.data};
+      return { ...state, orderObj: action.data };
     case "ORDER_DATE":
+      return { ...state, orderlist: action.data };
+    case "FILTER_ORDER":
       return { ...state, orderlist: action.data };
     case "REFRESH":
       return {

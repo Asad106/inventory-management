@@ -81,7 +81,6 @@ export const updateUserById = (user, history, id) => {
   };
 };
 
-
 export const getActiveUsers = () => {
   console.log("in action hy");
   return (dispatch, getState, { getFirebase }) => {
@@ -98,7 +97,7 @@ export const getActiveUsers = () => {
           users.push({ ...doc.data(), id: doc.id });
         });
         dispatch({ type: "USER_STATUS", data: users });
-        // console.log("Users are", users);
+        console.log("Users are", users);
       });
   };
 };

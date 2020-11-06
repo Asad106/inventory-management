@@ -7,7 +7,7 @@ import { CSVLink } from "react-csv";
 //   { label: "Email", key: "email" },
 //   { label: "Age", key: "age" },
 // ];
-function AsyncCSV({ data }) {
+function TransactionReport({ data }) {
   const [state, setState] = useState({
     csvReport: {
       data: [],
@@ -15,7 +15,7 @@ function AsyncCSV({ data }) {
       filename: "Report.csv",
     },
   });
-  // console.log(data.items.productName);
+  console.log(data);
   const downloadReport = (event, done) => {
     // API call to get data
     const objReport = {
@@ -23,13 +23,13 @@ function AsyncCSV({ data }) {
       //   headers: headers,
       data: data.map(function (obj) {
         return {
-          OrderId: obj.order_ID,
-          UserName: obj.user_name,
-          Total_Bill: obj.total_bill,
-          Discount: obj.discount,
-          Provider_Name: obj.provider_name,
-          Location: obj.dropoff_loc,
-          //   item_Name: obj.items[0].productName,
+          Sender: obj.sender_name,
+          Reciever: obj.reciever_name,
+          Amount: obj.amount,
+          Commission: obj.commission,
+          Transaction_ID: obj.Transaction_id,
+          Payment_Method: obj.method,
+          Order_Id: obj.order_ID,
         };
       }),
     };
@@ -50,4 +50,4 @@ function AsyncCSV({ data }) {
   );
 }
 
-export default AsyncCSV;
+export default TransactionReport;
