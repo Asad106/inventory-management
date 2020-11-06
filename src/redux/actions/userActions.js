@@ -81,6 +81,7 @@ export const updateUserById = (user, history, id) => {
   };
 };
 
+
 export const getActiveUsers = () => {
   console.log("in action hy");
   return (dispatch, getState, { getFirebase }) => {

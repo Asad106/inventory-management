@@ -1,39 +1,3 @@
-// import React from "react";
-// import {
-//     Container,
-//     Row,
-//     Col,
-//     Tab,
-//     Tabs,
-//     Table,
-//     Card,
-//     Image,
-//     Modal,
-//     Button,
-//     Form,
-//     InputGroup,
-//     Spinner,
-//   } from "react-bootstrap";
-
-//   class Orders extends React.Component {
-//     constructor() {
-//       super();
-  
-//       this.state = {
-//     };
-
-// }
-// render() {
-//     return (
-        
-//     );
-// }
-// }
-
-// export default Orders;
-
-
-
 /** @format */
 
 import React, { useEffect, useState } from "react";
@@ -111,8 +75,8 @@ function Orders(props) {
     setShowPerPage(e.target.value);
     setPage(0);
   };
-  // const onEdit = (id) => {
-  //   console.log("id of an user" + id);
+  // const getTransactionForOrder = (id) => {
+  //   console.log("id of an order" + id);
   //   history.push(`/adduser/${id}`);
   // };
   const onBack = () => {

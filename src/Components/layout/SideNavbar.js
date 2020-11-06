@@ -119,15 +119,10 @@ const itemList2 = [
   {
     id: 8,
     text: "Transactions",
-    icon: <StoreMallDirectory />,
+    icon: <AttachMoney />,
     url: "/transactions",
   },
-  {
-    id: 9,
-    text: "Finanical Management",
-    icon: <AttachMoney />,
-    url: "/Financial",
-  },
+ 
 ];
 
 class SideNavbar extends Component {

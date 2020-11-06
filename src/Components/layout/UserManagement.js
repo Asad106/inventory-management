@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-// import ListViewHeader from "../common/ListViewHeader";
+import ListViewHeader from "../common/ListViewHeader";
 import { Box } from "@material-ui/core";
 import UserData from "./UserData";
 import { compose } from "redux";
@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import Pagination from "./Pagination";
 import { getUsers } from "../../redux/actions/userActions";
 import { withStyles } from "@material-ui/core/styles";
-import ListViewHeaderWithoutAddButton from "../common/ListViewHeaderWithoutAddButton";
 
 const Styles = (theme) => ({
   root: {
@@ -102,11 +101,11 @@ function UserManagement(props) {
   };
   return (
     <Box mx={2} className={classes.root}>
-      <ListViewHeaderWithoutAddButton
+      <ListViewHeader
         searchHandler={searchHandler}
         title="User Management"
-        // btnLabel="Add User"
-        // btnLink="/addUser"
+        btnLabel="Add User"
+        btnLink="/addUser"
       />
       <Box my={2}>
         <UserData
