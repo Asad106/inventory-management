@@ -75,11 +75,8 @@ export const getOrdersDate = () => {
 };
 
 export const getFilterOrder = (start, end) => {
-  console.log("sataystyasd" + start, "asdhgafhgasf" + end);
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
-    // let d = new Date();
-    // let cd = d.getMonth() - 1;
     firebase
       .firestore()
       .collection("order")

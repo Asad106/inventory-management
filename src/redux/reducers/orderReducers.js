@@ -1,5 +1,7 @@
 /** @format */
 
+import { toast } from "react-toastify";
+
 const initState = { orderlist: [], orderObj: {} };
 
 const orderReducers = (state = initState, action) => {
@@ -12,7 +14,12 @@ const orderReducers = (state = initState, action) => {
     case "ORDER_DATE":
       return { ...state, orderlist: action.data };
     case "FILTER_ORDER":
-      return { ...state, orderlist: action.data };
+      if (action.data) {
+        return { ...state, orderlist: action.data };
+      } else {
+        toast("No record found");
+      }
+
     case "REFRESH":
       return {
         ...state,

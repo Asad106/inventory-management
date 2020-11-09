@@ -70,10 +70,9 @@ function Sales(props) {
       <Typography variant="h6" style={{ paddingBottom: "10px" }}>
         Sales & Reports
       </Typography>
-      <Container style={{ width: "63%" }}>
+      <Container style={{ width: "60%", padding: 10 }}>
         <Grid
           container
-          px={5}
           mx={5}
           justify="center"
           style={{
@@ -82,32 +81,26 @@ function Sales(props) {
             marginTop: 20,
             flexDirection: "column",
             borderRadius: 20,
+            paddingLeft: "30%",
           }}
         >
           <Grid
             item
-            sm={12}
-            md={12}
             px={3}
-            style={{ justifyContent: "center", textAlign: "center" }}
+            // style={{ justifyContent: "center", textAlign: "center" }}
           >
             <Typography
               style={{
-                // paddingLeft: "30%",
                 fontSize: 16,
-                padding: 10,
+                padding: 16,
                 fontWeight: "bold",
               }}
             >
               Generate Reports
             </Typography>
           </Grid>
-          <Grid
-            item
-            px={4}
-            style={{ justifyContent: "center", textAlign: "center" }}
-          >
-            <div style={{ textAlign: "center" }}>
+          <Grid item px={4} justify={"center"}>
+            <div>
               <Button
                 variant="primary"
                 className={classes.button}
@@ -125,7 +118,6 @@ function Sales(props) {
                   onOpen={handleOpen}
                   value={type}
                   onChange={handleChange}
-                  fullWidth
                 >
                   <MenuItem value={"orders"}>Orders Report</MenuItem>
                   <MenuItem value={"transactions"}>
@@ -136,7 +128,7 @@ function Sales(props) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item style={{ justifyContent: "center", textAlign: "center" }}>
+          <Grid item>
             <Typography>From : </Typography>
             <DatePicker
               selected={startDate}
@@ -162,16 +154,15 @@ function Sales(props) {
             (() => {
               if (type === "orders")
                 return (
-                  <Grid
-                    item
-                    px={4}
-                    style={{ justifyContent: "center", paddingLeft: "25%" }}
-                  >
+                  <Grid item px={4} style={{ textAlign: "center" }}>
                     <Button
-                      variant="outlined"
+                      variant="filled"
                       className={classes.button}
-                      onClick={handleOpen}
-                      style={{ marginBottom: 10 }}
+                      // onClick={handleOpen}
+                      style={{
+                        marginBottom: 10,
+                        backgroundColor: "#3f51b5",
+                      }}
                     >
                       <AsyncCSV data={props.orders} />
                     </Button>
@@ -182,13 +173,17 @@ function Sales(props) {
                   <Grid
                     item
                     px={4}
-                    style={{ justifyContent: "center", textAlign: "center" }}
+                    // style={{ justifyContent: "center", textAlign: "center" }}
                   >
                     <Button
-                      variant="outlined"
+                      variant="filled"
                       className={classes.button}
                       onClick={handleOpen}
-                      style={{ marginBottom: 10 }}
+                      style={{
+                        marginBottom: 10,
+                        alignSelf: "center",
+                        backgroundColor: "#ffffff",
+                      }}
                     >
                       <TransactionReport data={props.transactions} />
                     </Button>

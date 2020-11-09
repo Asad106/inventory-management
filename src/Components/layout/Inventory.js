@@ -97,6 +97,10 @@ function Inventory(props) {
     setPage(page + showPerPage);
     // limit = limit + 20;
   };
+  // const loadData = () => {
+  //   setPage(0);
+  //   // limit = limit + 20;
+  // };
 
   const searchHandler = (e) => {
     const searchValue = e.target.value;
@@ -121,6 +125,7 @@ function Inventory(props) {
     <Box mx={2} className={classes.root}>
       <ListViewHeader
         searchHandler={searchHandler}
+        // loadData={loadData}
         title="Inventory Management"
         btnLabel="Add Product"
         btnLink="/addInventory"

@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, InputBase, Box, Button } from "@material-ui/core";
 import { Add as AddIcon, Search as SearchIcon } from "@material-ui/icons";
+import CachedIcon from "@material-ui/icons/Cached";
 import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,17 +33,24 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: "inherit",
-    width: "100%",
+    width: "80%",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    width: "100%",
+    width: "80%",
   },
 }));
 
-function ListViewHeader({ title, btnLabel, btnLink, history, searchHandler }) {
+function ListViewHeader({
+  title,
+  btnLabel,
+  btnLink,
+  history,
+  searchHandler,
+  loadData,
+}) {
   const classes = useStyles();
   return (
     <Box className={classes.root}>
@@ -55,15 +63,30 @@ function ListViewHeader({ title, btnLabel, btnLink, history, searchHandler }) {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase
-              onBlur={searchHandler}
-              placeholder="Search by Name"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
+            <div style={{ display: "flex" }}>
+              <InputBase
+                onBlur={searchHandler}
+                placeholder="Search by Name"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+              />
+              <Button
+                variant="filled"
+                color="secondary"
+                className={classes.button}
+                style={{
+                  fontSize: 12,
+                  color: "white",
+                  backgroundColor: "lightgray",
+                }}
+                // onClick={loadSearch}
+              >
+                search
+              </Button>
+            </div>
           </div>
         </Grid>
         {}
