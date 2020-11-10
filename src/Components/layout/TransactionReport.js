@@ -43,7 +43,7 @@ function TransactionReport({ data }) {
       {...state.csvReport}
       asyncOnClick={true}
       onClick={downloadReport}
-      style={{ textDecoration: "none", color: "white" }}
+      style={{ textDecoration: "none", color: "blue" }}
     >
       Generate Report
     </CSVLink>

@@ -42,7 +42,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ListViewHeaderWithoutAddButton({ title, btnLabel, btnLink, history, searchHandler }) {
+function ListViewHeaderWithoutAddButton({
+  title,
+  btnLabel,
+  btnLink,
+  history,
+  searchHandler,
+}) {
   const classes = useStyles();
   return (
     <Box className={classes.root}>
@@ -55,15 +61,30 @@ function ListViewHeaderWithoutAddButton({ title, btnLabel, btnLink, history, sea
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase
-              onBlur={searchHandler}
-              placeholder="Search by Name"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
+            <div style={{ display: "flex" }}>
+              <InputBase
+                onBlur={searchHandler}
+                placeholder="Search by Name"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+              />
+              <Button
+                variant="filled"
+                color="secondary"
+                className={classes.button}
+                style={{
+                  fontSize: 12,
+                  color: "white",
+                  backgroundColor: "lightgray",
+                }}
+                // onClick={loadSearch}
+              >
+                search
+              </Button>
+            </div>
           </div>
         </Grid>
         {}

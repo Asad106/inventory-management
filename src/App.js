@@ -20,6 +20,10 @@ import "react-toastify/dist/ReactToastify.css";
 import AddUser from "./Components/layout/AddUser";
 import Orders from "./Components/layout/Orders"
 import Transactions from "./Components/layout/Transactions"
+import Cart from "./Components/layout/Cart"
+import AppFeedBacks from "./Components/layout/AppFeedBacks"
+import Problems from "./Components/layout/Problems"
+
 
 function App(props) {
   const [loading, setLoading] = useState(true);
@@ -74,9 +78,12 @@ function App(props) {
                 <Route path="/resolution" component={Resolution} />
                 <Route path="/user" component={UserManagement} />
                 <Route path="/inventory" component={InventoryManagement} />
-                <Route path="/financial" component={FinancialManagement} />
                 <Route path="/settings" component={Settings} />
+                <Route path="/carts" component={Cart} />
                 <Route path="/orders" component={Orders} />
+                <Route path="/feedbacks" component={AppFeedBacks} />
+                <Route path="/prosols" component={Problems} />
+
                 <Route path="/transactions" component={Transactions} />
 
                 <Route

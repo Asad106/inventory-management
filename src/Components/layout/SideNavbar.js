@@ -95,29 +95,47 @@ const itemList1 = [
     icon: <BusinessCenter />,
     url: "/Resolution",
   },
+  {
+    id: 5,
+    text: "Feed Backs",
+    icon: <BusinessCenter />,
+    url: "/feedbacks",
+  },
+  {
+    id: 6,
+    text: "Problems/Solutions",
+    icon: <BusinessCenter />,
+    url: "/prosols",
+  },
 ];
 
 const itemList2 = [
   {
-    id: 5,
+    id: 7,
     text: "User Management",
     icon: <People />,
     url: "/user",
   },
   {
-    id: 6,
+    id: 8,
     text: "Inventory Management",
     icon: <StoreMallDirectory />,
     url: "/inventory",
   },
   {
-    id: 7,
+    id: 9,
+    text: "Carts",
+    icon: <StoreMallDirectory />,
+    url: "/carts",
+  },
+  {
+    id: 10,
     text: "Orders",
     icon: <StoreMallDirectory />,
     url: "/orders",
   },
   {
-    id: 8,
+    id: 11,
     text: "Transactions",
     icon: <AttachMoney />,
     url: "/transactions",

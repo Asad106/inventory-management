@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+/** @format */
+
+import React, { useEffect, useState } from "react";
+import ListViewHeaderWithoutAddButton from "../common/ListViewHeaderWithoutAddButton";
 import { Box } from "@material-ui/core";
-import InventoryData from "./InventoryData";
-import ListViewHeader from "../common/ListViewHeader";
+import AppFeedBacksData from "./AppFeedbacksData";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import Pagination from "./Pagination";
-import {
-  getInventories,
-  deleteInventory,
-} from "../../redux/actions/inventoryActions";
+import { getFeedBacks } from "../../redux/actions/feedbackActions";
 import { withStyles } from "@material-ui/core/styles";
 
 const Styles = (theme) => ({
@@ -63,78 +61,62 @@ const Styles = (theme) => ({
   },
 });
 
-function Inventory(props) {
+function AppFeedBacks(props) {
   const { classes } = props;
   const [showPerPage, setShowPerPage] = React.useState(5);
   const [page, setPage] = React.useState(0);
+  const [filterdata, setFilterData] = useState("");
   const history = props.history;
-  const [filterdata, setStateFilterData] = React.useState("");
 
-  const onEdit = (id) => {
-    // console.log("id of an inventory" + id);
-    history.push(`/addInventory/${id}`);
-
-    // props.editInventories(id);
-  };
-
-  const onDelete = (id) => {
-    props.deleteInventory(id);
-    props.getInventories(showPerPage, page);
-  };
-
+  useEffect(() => {
+    props.getFeedBacks();
+  }, []);
   const onPageChange = (e) => {
     setShowPerPage(e.target.value);
     setPage(0);
   };
-
+  // const getTransactionForOrder = (id) => {
+  //   console.log("id of an order" + id);
+  //   history.push(`/adduser/${id}`);
+  // };
   const onBack = () => {
     if (page === 0) return;
     setPage(page - showPerPage);
-    // limit = limit - 20;
   };
-
   const onForward = () => {
     setPage(page + showPerPage);
-    // limit = limit + 20;
   };
-
   const searchHandler = (e) => {
     const searchValue = e.target.value;
     setPage(0);
-    // console.log(searchValue);
     if (searchValue) {
-      const filterResult = props.inventories.filter((inventory) =>
-        inventory.productName.toLowerCase().includes(searchValue)
+      const filterResult = props.feedbacks.filter((feedback) =>
+      feedback.user_name.includes(searchValue)
       );
 
-      setStateFilterData(filterResult);
+      setFilterData(filterResult);
     } else {
-      setStateFilterData(props.inventories);
+      setFilterData(props.feedbacks);
     }
   };
-
-  useEffect(() => {
-    props.getInventories(showPerPage, page);
-  }, []);
-  // console.log(props.inventories);
   return (
     <Box mx={2} className={classes.root}>
-      <ListViewHeader
+      <ListViewHeaderWithoutAddButton
         searchHandler={searchHandler}
-        title="Inventory Management"
-        btnLabel="Add Product"
-        btnLink="/addInventory"
+        title="FeedBacks"
+        // btnLabel="Add User"
+        // btnLink="/addUser"
       />
       <Box my={2}>
-        <InventoryData
-          inventories={filterdata ? filterdata : props.inventories}
+        <AppFeedBacksData
+          feedbacks={filterdata ? filterdata : props.feedbacks}
           page={page}
           showPerPage={showPerPage}
-          onDelete={onDelete}
-          onEdit={onEdit}
+          // onDelete={onDelete}
+          // onEdit={onEdit}
         />
         <Pagination
-          dataSize={props.inventories.slice(page, page + showPerPage).length} // Slice will be removed when pagination from backend implemented
+          dataSize={props.feedbacks.slice(page, page + showPerPage).length} // Slice will be removed when pagination from backend implemented
           page={page}
           onBack={onBack}
           onForward={onForward}
@@ -148,21 +130,18 @@ function Inventory(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getInventories: (limit, startAt) => {
-      dispatch(getInventories(limit, startAt));
-    },
-    deleteInventory: (id) => {
-      dispatch(deleteInventory(id));
+    getFeedBacks: () => {
+      dispatch(getFeedBacks());
     },
   };
 };
 const mapStateToProps = (state) => {
   return {
-    inventories: state.inventory.dataList,
+    feedbacks: state.feedback.feedbacklist,
   };
 };
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(Styles)
-)(Inventory);
+)(AppFeedBacks);

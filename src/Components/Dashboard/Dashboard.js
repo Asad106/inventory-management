@@ -17,6 +17,9 @@ import { getOrdersDate } from "../../redux/actions/orderActions";
 import { withStyles } from "@material-ui/core/styles";
 import { getActiveUsers } from "../../redux/actions/userActions";
 import { getTransactionDate } from "../../redux/actions/transactionActions";
+import {getFeedBackCount} from "../../redux/actions/feedbackActions";
+import {getProblemCount} from "../../redux/actions/problemActions";
+import {getSolvedProblemCount} from "../../redux/actions/solvedproblemActions";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -59,6 +62,16 @@ function Dashboard(props) {
   useEffect(() => {
     props.getTransactions();
   }, []);
+  useEffect(() => {
+    props.getFeedBackCount();
+  }, []);
+  useEffect(() => {
+    props.getProblemCount();
+  }, []);
+  useEffect(() => {
+    props.getSolvedProblemCount();
+  }, []);
+  
   const bull = <span className={classes.bullet}>•</span>;
   console.log(props.activeUser);
   return (
@@ -79,7 +92,7 @@ function Dashboard(props) {
               App Feedbacks
             </Typography>
             <Typography variant="h5" component="h2">
-              {/* be{bull}nev{bull}o{bull}lent */}
+              {props.feedbackcount}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
               {/* adjective */}
@@ -101,10 +114,10 @@ function Dashboard(props) {
               color="textSecondary"
               gutterBottom
             >
-              App Feedbacks resolved
+              Problems
             </Typography>
             <Typography variant="h5" component="h2">
-              {/* be{bull}nev{bull}o{bull}lent */}
+              {props.problemcount}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
               {/* adjective */}
@@ -126,10 +139,10 @@ function Dashboard(props) {
               color="textSecondary"
               gutterBottom
             >
-              Total Users
+              Solved Problems
             </Typography>
             <Typography variant="h5" component="h2">
-              {/* be{bull}nev{bull}o{bull}lent */}
+              {props.solvedproblemcount}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
               {/* adjective */}
@@ -194,6 +207,15 @@ const mapDispatchToProps = (dispatch) => {
     getTransactions: () => {
       dispatch(getTransactionDate());
     },
+    getFeedBackCount:()=>{
+      dispatch(getFeedBackCount());
+    },
+    getProblemCount:()=>{
+      dispatch(getProblemCount());
+    },
+    getSolvedProblemCount:()=>{
+      dispatch(getSolvedProblemCount());
+    },
   };
 };
 const mapStateToProps = (state) => {
@@ -201,6 +223,9 @@ const mapStateToProps = (state) => {
     orders: state.order.orderlist,
     activeUser: state.user.userList,
     transactions: state.transaction.transactionlist,
+    feedbackcount:state.feedback.feedbackcount,
+    problemcount:state.problem.problemcount,
+    solvedproblemcount:state.solvedproblem.solvedproblemcount
   };
 };
 

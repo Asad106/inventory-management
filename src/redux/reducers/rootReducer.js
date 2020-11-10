@@ -10,7 +10,11 @@ import { firebaseReducer } from "react-redux-firebase";
 import { inventoryReducer } from "./inventoryReducer";
 import userReducer from "./userReducer";
 import orderReducers from "./orderReducers";
-import transactionReducer from "./transactionReducer"
+import transactionReducer from "./transactionReducer";
+import cartReducer from "./cartReducer";
+import feedbackReducer from "./feedbackReducer";
+import problemReducer from "./problemReducer";
+import solvedproblemReducer from "./solvedproblemReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -18,6 +22,10 @@ const rootReducer = combineReducers({
   user: userReducer,
   order:orderReducers,
   transaction:transactionReducer,
+  cart:cartReducer,
+  feedback:feedbackReducer,
+  problem:problemReducer,
+  solvedproblem:solvedproblemReducer,
   //   project: projectReducer,
   firestore: firestoreReducer, //to sync data with firestore
   firebase: firebaseReducer, //for sync auth

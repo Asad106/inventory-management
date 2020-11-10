@@ -10,7 +10,6 @@ import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
 import Checkbox from "@material-ui/core/Checkbox";
 import DeleteIcon from "@material-ui/icons/Delete";
-import {getTransactionForOrderById} from '../../redux/actions/orderActions'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -34,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function OrdersData(props) {
+function CartData(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [isobjset,setisobjset]= React.useState(false);
@@ -55,38 +54,30 @@ const [obj,setobj]=React.useState([]);
           <TableCell>User</TableCell>
 
             <TableCell>Cart Creation Date</TableCell>
-            <TableCell>Dropoff Location</TableCell>
 
-            <TableCell>Cart to Order Date</TableCell>
-            <TableCell>Provider</TableCell>
             <TableCell>Total Bill</TableCell>
-            <TableCell>Discount Given</TableCell>
             <TableCell align="center">Details</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.orders
+          {props.carts
             .slice(props.page, props.page + props.showPerPage) // slice method will change with backend pagination
-            .map((order, index) => (
+            .map((cart, index) => (
            
               <TableRow key={index}>
                 <TableCell component="th" scope="row">
-                  {order.user_name}
+                  {cart.user_name}
                 </TableCell>
-                <TableCell>{new Date((order.creation_date_time.seconds*1000)).toLocaleString()}</TableCell>
-                <TableCell>{order.dropoff_loc.latitude.toString() +"," + order.dropoff_loc.longitude.toString()}</TableCell>
+                <TableCell>{new Date((cart.creation_date_time.seconds*1000)).toLocaleString()}</TableCell>
 
-                <TableCell>{new Date((order.card_to_order_date.seconds*1000)).toLocaleString()}</TableCell>
-                <TableCell>{order.provider_name}</TableCell>
-                <TableCell>{order.total_bill}</TableCell>
-                <TableCell>{order.discount}</TableCell>
+                <TableCell>{cart.total_bill}</TableCell>
 
                 <TableCell align="center">
                  
                   <Button variant="outlined" color="primary" onClick={()=>{handleClickOpen();
-                  setobj(order.items);
+                  setobj(cart.items);
+                  console.log("items are",cart.items);
                   setisobjset(true);
-                  props.getTransactionForOrderById(order.transaction);
                  
                   }}>
         Details
@@ -101,17 +92,7 @@ const [obj,setobj]=React.useState([]);
 maxWidth = {'md'}>
     <DialogTitle id="form-dialog-title">Details</DialogTitle>
     <DialogContent>
-      <DialogContentText>
-        Transaction Detail
-      </DialogContentText>
-      {props.orderObj ?   
       <>
-      <Row> <h4>Reiever: {props.orderObj.reciever_name}</h4></Row>
-     
-      <Row><h4>Sender: {props.orderObj.sender_name}</h4></Row>
-      <Row><h4>Method: {props.orderObj.method}</h4></Row>
-      <Row><h4>Amount: {props.orderObj.amount}</h4></Row>
-      <Row><h4>Commission: {props.orderObj.commission}</h4></Row>
       <DialogContentText>
         Items Detail
       </DialogContentText>
@@ -134,17 +115,17 @@ maxWidth = {'md'}>
             </TableHead>
             <TableBody>
               {obj // slice method will change with backend pagination
-                .map((order, index) => (
+                .map((cart, index) => (
                
                   <TableRow key={index}>
                     <TableCell component="th" scope="row">
-                      {order.price}
+                      {cart.price}
                     </TableCell>
-                    <TableCell>{order.pricePerUnit}</TableCell>
-                    <TableCell>{order.productName}</TableCell>
+                    <TableCell>{cart.pricePerUnit}</TableCell>
+                    <TableCell>{cart.productName}</TableCell>
     
-                    <TableCell>{order.productType}</TableCell>
-                    <TableCell>{order.quantity}</TableCell>
+                    <TableCell>{cart.productType}</TableCell>
+                    <TableCell>{cart.quantity}</TableCell>
                  
     
                     
@@ -158,12 +139,11 @@ maxWidth = {'md'}>
         (null)
       )
             :
-            null
+            <h3>Empty</h3>
           }
      
       {/* <h4>Transaction Date: {new Date((props.orderObj.transaction_date.seconds*1000)).toLocaleString()}</h4> */}
-      </>:
-      <h3>Empty</h3>}
+      </>
     
 
     </DialogContent>
@@ -182,18 +162,17 @@ maxWidth = {'md'}>
   );
   
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getTransactionForOrderById: (id) => {
-      dispatch(getTransactionForOrderById(id));
-    },
-  };
-};
-const mapStateToProps = (state) => {
-  return {
-    orders: state.order.orderlist,
-    orderObj:state.order.orderObj
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     getTransactionForOrderById: (id) => {
+//       dispatch(getTransactionForOrderById(id));
+//     },
+//   };
+// };
+// const mapStateToProps = (state) => {
+//   return {
+//     carts: state.cart.cartlist
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrdersData);
+export default (CartData);

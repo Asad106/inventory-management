@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { CSVLink } from "react-csv";
 
 // const headers = [
-//   { label: "Order ID", key: "order_id" },
-//   { label: "User Name", key: "user_name" },
-//   { label: "Total_bill", key: "total_bill" },
-//   { label: "Discount", key: "discount" },
-//   { label: "Provider Name", key: "provider_name" },
-//   { label: "Location", key: "loc" },
+//   { label: "First Name", key: "firstName" },
+//   { label: "Last Name", key: "lastName" },
+//   { label: "Email", key: "email" },
+//   { label: "Age", key: "age" },
 // ];
 function AsyncCSV({ data }) {
   const [state, setState] = useState({
@@ -22,7 +20,7 @@ function AsyncCSV({ data }) {
     // API call to get data
     const objReport = {
       filename: "Report.csv",
-      // headers: headers,
+      //   headers: headers,
       data: data.map(function (obj) {
         return {
           OrderId: obj.order_ID,
@@ -45,10 +43,7 @@ function AsyncCSV({ data }) {
       {...state.csvReport}
       asyncOnClick={true}
       onClick={downloadReport}
-      style={{
-        textDecoration: "none",
-        color: "white",
-      }}
+      style={{ textDecoration: "none", color: "blue" }}
     >
       Generate Report
     </CSVLink>
