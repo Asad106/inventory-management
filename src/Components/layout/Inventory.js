@@ -6,6 +6,7 @@ import ListViewHeader from "../common/ListViewHeader";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import Pagination from "./Pagination";
+import Loader from "../../Components/common/Loader";
 import {
   getInventories,
   deleteInventory,
@@ -106,7 +107,6 @@ function Inventory(props) {
       const filterResult = props.inventories.filter((inventory) =>
         inventory.productName.toLowerCase().includes(searchValue)
       );
-
       setStateFilterData(filterResult);
     } else {
       setStateFilterData(props.inventories);
@@ -119,6 +119,7 @@ function Inventory(props) {
   // console.log(props.inventories);
   return (
     <Box mx={2} className={classes.root}>
+      <Loader />
       <ListViewHeader
         searchHandler={searchHandler}
         title="Inventory Management"

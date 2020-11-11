@@ -42,19 +42,25 @@ const Styles = (theme) => ({
     marginBottom: "10px",
   },
 });
+const initInventory = {
+  productName: "",
+  productType: "",
+  price: 0.0,
+  pricePerUnit: 0.0,
+  unit: "",
+  imageLink: "",
+  errorproductName: "",
+  errorproductType: "",
+  errorprice: 0.0,
+  errorpricePerUnit: 0.0,
+  errorunit: "",
+};
 
 const AddInventory = (props) => {
   const id = props.match.params.id;
   console.log(props.match.params);
   const { classes } = props;
-  let [inventory, setInventory] = useState({
-    productName: "",
-    productType: "",
-    price: 0.0,
-    pricePerUnit: 0.0,
-    unit: "",
-    imageLink: "",
-  });
+  let [inventory, setInventory] = useState(initInventory);
   const setImageLink = (imageLink) => {
     setInventory({ ...inventory, imageLink });
   };
@@ -80,28 +86,67 @@ const AddInventory = (props) => {
       [e.target.name]: e.target.value,
     });
   };
+  const validateInventory = () => {
+    let errorproductName = "";
+    let errorproductType = "";
+    let errorprice = 0.0;
+    let errorpricePerUnit = 0.0;
+    let errorunit = "";
+    //handle name validations
+    if (inventory.productName === "") {
+      errorproductName = "please provide a name of a product";
+    }
+    if (errorproductName) {
+      setInventory({ ...inventory, errorproductName });
+      return false;
+    }
+    //handle type validations
+    if (inventory.productType === "") {
+      errorproductType = "please provide a type of a product";
+    }
+    if (errorproductType) {
+      setInventory({ ...inventory, errorproductType });
+      return false;
+    }
+    //handle price validations
+    if (inventory.price < 0 || inventory.price === "") {
+      errorprice = "price cannot be empty";
+    }
+    if (errorprice) {
+      setInventory({ ...inventory, errorprice });
+      return false;
+    }
+    //handle Unitprice validations
+    if (inventory.pricePerUnit < 0) {
+      errorpricePerUnit = "price cannot be empty";
+    }
+    if (errorpricePerUnit) {
+      setInventory({ ...inventory, errorpricePerUnit });
+      return false;
+    }
+    //handle type validations
+    if (inventory.unit === "") {
+      errorunit = "please provide a unit of a product";
+    }
+    if (errorunit) {
+      setInventory({ ...inventory, errorunit });
+      return false;
+    }
+    return true;
+  };
   const handleSubmit = () => {
     // console.log(props.inventory);
     // handleValidations();
     if (id) {
-      console.log("+++++++++++++++++++++++++++>>>>>>");
       props.updateInventory(inventory, props.history, id);
     } else {
-      console.log("-------------------------------->>>>>>");
-      props.submitInventory(inventory, props.history);
+      const isValid = validateInventory();
+      if (isValid) {
+        props.submitInventory(inventory, props.history);
+        setInventory(initInventory);
+      }
     }
   };
-  const handleValidations = () => {
-    if (
-      inventory.productName == "" ||
-      inventory.productType == "" ||
-      inventory.price < 0 ||
-      inventory.pricePerUnit < 0
-    ) {
-      return toast.error("please ender valid data of a product");
-    }
-  };
-  console.log(inventory);
   return (
     <Box mx={2}>
       <Box className={classes.header} py={1} px={2}>
@@ -120,6 +165,9 @@ const AddInventory = (props) => {
               onChange={handleChange}
               className={classes.inputField}
             />
+            <div style={{ color: "red", fontSize: 14, margin: 5 }}>
+              {inventory.errorproductName}
+            </div>
           </Grid>
           <Grid item>
             <TextField
@@ -132,6 +180,9 @@ const AddInventory = (props) => {
               onChange={handleChange}
               className={classes.inputField}
             />
+            <div style={{ color: "red", fontSize: 14, margin: 5 }}>
+              {inventory.errorproductType}
+            </div>
           </Grid>
           <Grid item>
             <TextField
@@ -145,6 +196,9 @@ const AddInventory = (props) => {
               onChange={handleChange}
               className={classes.inputField}
             />
+            <div style={{ color: "red", fontSize: 14, margin: 5 }}>
+              {inventory.errorprice}
+            </div>
           </Grid>
           <Grid item>
             <TextField
@@ -158,6 +212,9 @@ const AddInventory = (props) => {
               onChange={handleChange}
               className={classes.inputField}
             />
+            <div style={{ color: "red", fontSize: 14, margin: 5 }}>
+              {inventory.errorpricePerUnit}
+            </div>
           </Grid>
           <Grid item>
             <TextField
@@ -170,6 +227,9 @@ const AddInventory = (props) => {
               onChange={handleChange}
               className={classes.inputField}
             />
+            <div style={{ color: "red", fontSize: 14, margin: 5 }}>
+              {inventory.errorunit}
+            </div>
             <Grid item>
               <ImageUpload imageHandler={setImageLink} />
             </Grid>

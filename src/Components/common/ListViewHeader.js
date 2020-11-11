@@ -74,7 +74,7 @@ function ListViewHeader({
                 inputProps={{ "aria-label": "search" }}
               />
               <Button
-                variant="filled"
+                variant="contained"
                 color="secondary"
                 className={classes.button}
                 style={{

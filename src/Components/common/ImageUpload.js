@@ -14,7 +14,6 @@ function ImageUpload({ imageHandler }) {
   function handleChange(e) {
     if (e.target.files[0]) {
       const image = e.target.files[0];
-
       setState(() => ({ image }));
       console.log(image);
     }
@@ -60,7 +59,7 @@ function ImageUpload({ imageHandler }) {
         alignItems: "center",
       }}
     >
-      <Input
+      <input
         name={state.image}
         type="file"
         onChange={handleChange}

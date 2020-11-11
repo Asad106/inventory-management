@@ -34,6 +34,7 @@ export const addUser = (user, history) => {
       .collection("users")
       .add({ ...user })
       .then((res) => {
+        console.log("we are getting ressponnsa", res);
         dispatch({ type: "ADD_USER" });
         refreshControl();
         history.push("/user");

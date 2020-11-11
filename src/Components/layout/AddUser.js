@@ -54,21 +54,26 @@ const Styles = (theme) => ({
   },
   inputField: {
     marginBottom: "10px",
+    width: "100%",
   },
 });
+const initialUser = {
+  name: "",
+  email: "",
+  password: "",
+  phoneNo: "",
+  address: "",
+  imageLink: "",
+  status: "Active",
+  erroremail: "",
+  errorpassword: "",
+  errorphoneNo: "",
+};
 
 const AddUser = (props) => {
   const id = props.match.params.id;
   const { classes } = props;
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    phoneNo: "",
-    address: "",
-    imageLink: "",
-    status: "Active",
-  });
+  const [user, setUser] = useState(initialUser);
   useEffect(() => {
     // console.log(props.user);
     if (props.user) {
@@ -82,6 +87,7 @@ const AddUser = (props) => {
     }
   }, [id]);
   const setImageLink = (imageLink) => {
+    console.log(imageLink);
     setUser({ ...user, imageLink });
   };
 
@@ -96,12 +102,56 @@ const AddUser = (props) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const validate = () => {
+    let erroremail = "";
+    let errorpassword = "";
+    let errorphoneNo = "";
+    // email validation
+    if (
+      !user.email.match(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      ) ||
+      user.email === ""
+    ) {
+      erroremail = "please provide a valid email ";
+    }
+    if (erroremail) {
+      setUser({ ...user, erroremail });
+      return false;
+    }
+    // password validation
+    if (user.password.length < 8 || user.password.length === "") {
+      errorpassword = "password should be minimum 8 characters ";
+    }
+    if (errorpassword) {
+      setUser({ ...user, errorpassword });
+      return false;
+    }
+    // phone validation
+    var phoneno = /^\d{15}$/;
+    if (!user.phoneNo.match(phoneno) || user.phoneNo === "") {
+      errorphoneNo = "plz provide valid phone number ";
+    }
+    if (errorphoneNo) {
+      setUser({ ...user, errorphoneNo });
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = () => {
+    console.log("user is ", user);
     if (id) {
       console.log("user should be apdated");
       props.updateUser(user, props.history, id);
     } else {
-      props.submitUser(user, props.history);
+      const isValid = validate();
+      if (isValid) {
+        console.log("in valid data");
+        props.submitUser(user, props.history);
+        setUser(initialUser);
+      }
     }
   };
   return (
@@ -128,7 +178,7 @@ const AddUser = (props) => {
                 name="name"
                 value={user.name}
                 variant="outlined"
-                fullWidth
+                // fullWidth
                 disabled
                 required
                 onChange={handleChange}
@@ -140,7 +190,7 @@ const AddUser = (props) => {
                 name="name"
                 value={user.name}
                 variant="outlined"
-                fullWidth
+                // fullWidth
                 required
                 onChange={handleChange}
                 className={classes.inputField}
@@ -154,7 +204,7 @@ const AddUser = (props) => {
                 name="email"
                 value={user.email}
                 variant="outlined"
-                fullWidth
+                // fullWidth
                 disabled
                 required
                 onChange={handleChange}
@@ -166,12 +216,15 @@ const AddUser = (props) => {
                 name="email"
                 value={user.email}
                 variant="outlined"
-                fullWidth
+                // fullWidth
                 required
                 onChange={handleChange}
                 className={classes.inputField}
               />
             )}
+            <div style={{ color: "red", fontSize: 14, margin: 5 }}>
+              {user.erroremail}
+            </div>
           </Grid>
           <Grid item>
             {id ? (
@@ -181,7 +234,7 @@ const AddUser = (props) => {
                 name="password"
                 value={user.password}
                 variant="outlined"
-                fullWidth
+                // fullWidth
                 disabled
                 required
                 onChange={handleChange}
@@ -194,12 +247,15 @@ const AddUser = (props) => {
                 name="password"
                 value={user.password}
                 variant="outlined"
-                fullWidth
+                // fullWidth
                 required
                 onChange={handleChange}
                 className={classes.inputField}
               />
             )}
+            <div style={{ color: "red", fontSize: 12 }}>
+              {user.errorpassword}
+            </div>
           </Grid>
           <Grid item style={{ marginTop: 10 }}>
             {id ? (
@@ -208,7 +264,7 @@ const AddUser = (props) => {
                 name="address"
                 value={user.address}
                 variant="outlined"
-                fullWidth
+                // fullWidth
                 disabled
                 required
                 onChange={handleChange}
@@ -220,7 +276,7 @@ const AddUser = (props) => {
                 name="address"
                 value={user.address}
                 variant="outlined"
-                fullWidth
+                // fullWidth
                 required
                 onChange={handleChange}
                 className={classes.inputField}
@@ -234,7 +290,7 @@ const AddUser = (props) => {
                 name="phoneNo"
                 value={user.phoneNo}
                 variant="outlined"
-                fullWidth
+                // fullWidth
                 disabled
                 required
                 onChange={handleChange}
@@ -246,16 +302,19 @@ const AddUser = (props) => {
                 name="phoneNo"
                 value={user.phoneNo}
                 variant="outlined"
-                fullWidth
+                // fullWidth
                 required
                 onChange={handleChange}
                 className={classes.inputField}
               />
             )}
+            <div style={{ color: "red", fontSize: 12 }}>
+              {user.errorphoneNo}
+            </div>
           </Grid>
           <Grid item px={5}>
             <FormControl className={classes.inputField}>
-              <InputLabel fullWidth id="Status" className={classes.inputField}>
+              <InputLabel id="Status" className={classes.inputField}>
                 Status
               </InputLabel>
               <Select
