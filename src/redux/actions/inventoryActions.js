@@ -1,7 +1,10 @@
 /** @format */
 
+import { clearLoader, isLoading } from "./loadingAction";
+
 export const getInventories = (limit, startAt) => {
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
     const firebase = getFirebase();
     firebase
       .firestore()
@@ -16,6 +19,7 @@ export const getInventories = (limit, startAt) => {
           inventories.push({ ...doc.data(), id: doc.id });
         });
         dispatch({ type: "GET_INVENTORIES", data: inventories });
+        dispatch(clearLoader());
       });
   };
 };
@@ -38,6 +42,7 @@ export const getInventories = (limit, startAt) => {
 
 export const addInventory = (inventory, history) => {
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
     const firebase = getFirebase();
     firebase
       .firestore()
@@ -46,6 +51,7 @@ export const addInventory = (inventory, history) => {
       .then((res) => {
         refreshControl();
         history.push("/inventory");
+        dispatch(clearLoader());
       })
       .catch((err) => {
         console.log("error while adding", err);
@@ -63,7 +69,9 @@ export const deleteInventory = (id) => {
       .doc(id)
       .delete()
       .then((res) => {
+        dispatch(isLoading());
         getInventories();
+        dispatch(clearLoader());
       })
       .catch((err) => {
         console.log("error while adding", err);
@@ -73,6 +81,7 @@ export const deleteInventory = (id) => {
 export const getInventoryById = (id) => {
   console.log(" Edit inventory id in action" + id);
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
     const firebase = getFirebase();
     firebase
       .firestore()
@@ -82,6 +91,7 @@ export const getInventoryById = (id) => {
       .then((doc) => {
         // console.log(doc.data());
         dispatch({ type: "GET_INVENTORY", data: doc.data() });
+        dispatch(clearLoader());
       })
       .catch((err) => {
         console.log("error while adding", err);
@@ -91,6 +101,7 @@ export const getInventoryById = (id) => {
 
 export const updateInventoryById = (inventory, history, id) => {
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
     const firebase = getFirebase();
     firebase
       .firestore()
@@ -101,6 +112,7 @@ export const updateInventoryById = (inventory, history, id) => {
         console.log(res);
         refreshControl();
         history.push("/inventory");
+        dispatch(clearLoader());
       })
       .catch((err) => {
         console.log("error while updating", err);

@@ -104,16 +104,12 @@ function Orders(props) {
       <ListViewHeaderWithoutAddButton
         searchHandler={searchHandler}
         title="Orders"
-        // btnLabel="Add User"
-        // btnLink="/addUser"
       />
       <Box my={2}>
         <OrdersData
           orders={filterdata ? filterdata : props.orders}
           page={page}
           showPerPage={showPerPage}
-          // onDelete={onDelete}
-          // onEdit={onEdit}
         />
         <Pagination
           dataSize={props.orders.slice(page, page + showPerPage).length} // Slice will be removed when pagination from backend implemented

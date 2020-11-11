@@ -1,9 +1,12 @@
 /** @format */
 
+import { isLoading, clearLoader } from "./loadingAction";
+
 //USER ACTIONS
 
 export const getUsers = () => {
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
     const firebase = getFirebase();
     firebase
       .firestore()
@@ -17,7 +20,9 @@ export const getUsers = () => {
         querySnapshot.forEach((doc) => {
           users.push({ ...doc.data(), id: doc.id });
         });
+
         dispatch({ type: "GET_USERS", data: users });
+        dispatch(clearLoader());
       });
   };
 };
@@ -28,6 +33,7 @@ export const refreshControl = () => {
 };
 export const addUser = (user, history) => {
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
     const firebase = getFirebase();
     firebase
       .firestore()
@@ -38,6 +44,7 @@ export const addUser = (user, history) => {
         dispatch({ type: "ADD_USER" });
         refreshControl();
         history.push("/user");
+        dispatch(clearLoader());
       })
       .catch((err) => {
         console.log("error while adding", err);
@@ -48,6 +55,7 @@ export const addUser = (user, history) => {
 export const getUserById = (id) => {
   console.log(" Edit USER BY id in action" + id);
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
     const firebase = getFirebase();
     firebase
       .firestore()
@@ -57,6 +65,7 @@ export const getUserById = (id) => {
       .then((doc) => {
         console.log(doc.data());
         dispatch({ type: "EDIT_USER", data: doc.data() });
+        dispatch(clearLoader());
       })
       .catch((err) => {
         console.log("error while Editing", err);
@@ -65,6 +74,7 @@ export const getUserById = (id) => {
 };
 export const updateUserById = (user, history, id) => {
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
     const firebase = getFirebase();
     firebase
       .firestore()
@@ -74,6 +84,7 @@ export const updateUserById = (user, history, id) => {
       .then((res) => {
         refreshControl();
         history.push("/user");
+        dispatch(clearLoader());
         // getUsers();
       })
       .catch((err) => {
@@ -85,6 +96,7 @@ export const updateUserById = (user, history, id) => {
 export const getActiveUsers = () => {
   console.log("in action hy");
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
     const firebase = getFirebase();
     firebase
       .firestore()
@@ -98,6 +110,7 @@ export const getActiveUsers = () => {
           users.push({ ...doc.data(), id: doc.id });
         });
         dispatch({ type: "USER_STATUS", data: users });
+        dispatch(clearLoader());
         console.log("Users are", users);
       });
   };

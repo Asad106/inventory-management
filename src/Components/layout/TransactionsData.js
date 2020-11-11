@@ -30,7 +30,7 @@ function TransactionsData(props) {
       <Table className={classes.table} aria-label="Transaction-table">
         <TableHead style={{ borderWidth: "2px solid grey " }}>
           <TableRow>
-          <TableCell>Sender</TableCell>
+            <TableCell>Sender</TableCell>
 
             <TableCell>Reciever</TableCell>
             <TableCell>Amount</TableCell>
@@ -45,18 +45,22 @@ function TransactionsData(props) {
           {props.transactions
             .slice(props.page, props.page + props.showPerPage) // slice method will change with backend pagination
             .map((transaction, index) => (
-           
               <TableRow key={index}>
                 <TableCell component="th" scope="row">
                   {transaction.sender_name}
                 </TableCell>
                 <TableCell>{transaction.reciever_name}</TableCell>
                 <TableCell>{transaction.amount}</TableCell>
-                <TableCell>{(transaction.amount * transaction.commission)/100}</TableCell>
+                <TableCell>
+                  {(transaction.amount * transaction.commission) / 100}
+                </TableCell>
                 <TableCell>{transaction.method}</TableCell>
 
-                <TableCell>{new Date((transaction.transaction_date*1000)).toLocaleString()}</TableCell>
-           
+                <TableCell>
+                  {new Date(
+                    transaction.transaction_date * 1000
+                  ).toLocaleString()}
+                </TableCell>
 
                 {/* <TableCell align="center">
                   <IconButton

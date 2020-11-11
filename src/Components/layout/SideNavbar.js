@@ -73,28 +73,28 @@ const styles = (theme) => ({
 const itemList1 = [
   {
     id: 1,
-    text: "Home",
+    text: "Dashboard",
     icon: <Dashboard />,
     url: "/",
   },
-  {
-    id: 2,
-    text: "Statistics",
-    icon: <Assessment />,
-    url: "/Statistics",
-  },
+  // {
+  //   id: 2,
+  //   text: "Statistics",
+  //   icon: <Assessment />,
+  //   url: "/Statistics",
+  // },
   {
     id: 3,
     text: "Sales & Reports",
     icon: <TrendingDown />,
     url: "/Sales",
   },
-  {
-    id: 4,
-    text: "Resolution Center",
-    icon: <BusinessCenter />,
-    url: "/Resolution",
-  },
+  // {
+  //   id: 4,
+  //   text: "Resolution Center",
+  //   icon: <BusinessCenter />,
+  //   url: "/Resolution",
+  // },
   {
     id: 5,
     text: "Feed Backs",
@@ -140,7 +140,6 @@ const itemList2 = [
     icon: <AttachMoney />,
     url: "/transactions",
   },
- 
 ];
 
 class SideNavbar extends Component {

@@ -9,7 +9,7 @@ const TransactionChart = ({ transactions }) => {
       const key = moment(item.transaction_date.toDate()).format("MMM DD");
       formattedResult[key] = {
         transactionAmount: item.amount,
-        commisionAmount: item.commission,
+        commisionAmount: (item.amount * item.commission) / 100,
       };
       return formattedResult;
     }, {});
@@ -28,18 +28,6 @@ const TransactionChart = ({ transactions }) => {
         y: value.commisionAmount,
       });
     });
-    console.log("TransactionSeries");
-    console.log(transactionSeriesData);
-    console.log("CommisionSeries");
-    console.log(commisionSeriesData);
-
-    // for (let i = 2; i < 10; i++) {
-    //   chartData.push({
-    //     x: "Oct " + i,
-    //     y: i * Math.random(),
-    //   });
-    // }
-
     const series = [
       {
         name: "transactions ",

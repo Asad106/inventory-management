@@ -1,9 +1,12 @@
 /** @format */
 
+import { clearLoader, isLoading } from "./loadingAction";
+
 //USER ACTIONS
 
 export const getOrders = () => {
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
     const firebase = getFirebase();
     firebase
       .firestore()
@@ -18,10 +21,8 @@ export const getOrders = () => {
           orders.push({ ...doc.data(), id: doc.id });
         });
         dispatch({ type: "GET_ORDERS", data: orders });
+        dispatch(clearLoader());
         console.log("Orders are", orders);
-        // const a=orders[0].card_to_order_date.seconds*1000;
-        // var d=new Date(a)
-        // console.log(d.toLocaleString());
       });
   };
 };
@@ -77,6 +78,7 @@ export const getOrdersDate = () => {
 export const getFilterOrder = (start, end) => {
   console.log("sataystyasd" + start, "asdhgafhgasf" + end);
   return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
     const firebase = getFirebase();
     // let d = new Date();
     // let cd = d.getMonth() - 1;
@@ -93,6 +95,7 @@ export const getFilterOrder = (start, end) => {
           orders.push({ ...doc.data(), id: doc.id });
         });
         dispatch({ type: "FILTER_ORDER", data: orders });
+        dispatch(clearLoader());
         console.log("Orders are", orders);
       });
   };

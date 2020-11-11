@@ -15,17 +15,19 @@ import cartReducer from "./cartReducer";
 import feedbackReducer from "./feedbackReducer";
 import problemReducer from "./problemReducer";
 import solvedproblemReducer from "./solvedproblemReducer";
+import loadingReducer from "./loadingReducer";
 
 const rootReducer = combineReducers({
+  loading: loadingReducer,
   auth: authReducer,
   inventory: inventoryReducer,
   user: userReducer,
-  order:orderReducers,
-  transaction:transactionReducer,
-  cart:cartReducer,
-  feedback:feedbackReducer,
-  problem:problemReducer,
-  solvedproblem:solvedproblemReducer,
+  order: orderReducers,
+  transaction: transactionReducer,
+  cart: cartReducer,
+  feedback: feedbackReducer,
+  problem: problemReducer,
+  solvedproblem: solvedproblemReducer,
   //   project: projectReducer,
   firestore: firestoreReducer, //to sync data with firestore
   firebase: firebaseReducer, //for sync auth

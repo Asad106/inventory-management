@@ -17,15 +17,13 @@ import { getOrdersDate } from "../../redux/actions/orderActions";
 import { withStyles } from "@material-ui/core/styles";
 import { getActiveUsers } from "../../redux/actions/userActions";
 import { getTransactionDate } from "../../redux/actions/transactionActions";
-import {getFeedBackCount} from "../../redux/actions/feedbackActions";
-import {getProblemCount} from "../../redux/actions/problemActions";
-import {getSolvedProblemCount} from "../../redux/actions/solvedproblemActions";
+import { getFeedBackCount } from "../../redux/actions/feedbackActions";
+import { getProblemCount } from "../../redux/actions/problemActions";
+import { getSolvedProblemCount } from "../../redux/actions/solvedproblemActions";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import { Row, Col, Tab, Tabs, Modal } from "react-bootstrap";
-
+import Loader from "../common/Loader";
 const Styles = (theme) => ({
   root: {
     flexGrow: 1,
@@ -71,14 +69,17 @@ function Dashboard(props) {
   useEffect(() => {
     props.getSolvedProblemCount();
   }, []);
-  
+
   const bull = <span className={classes.bullet}>•</span>;
-  console.log(props.activeUser);
   return (
     <Container>
+      <Loader />
       <Box mx={2} className={classes.root}>
-        <Typography variant="h6" style={{ paddingBottom: "10px" }}>
-          DashBoard
+        <Typography
+          variant="h6"
+          style={{ paddingBottom: "10px", color: "gray" }}
+        >
+          Dashboard
         </Typography>
       </Box>
       <Grid container direction="row" justify="space-between">
@@ -163,7 +164,7 @@ function Dashboard(props) {
           <Grid item sm={12} md={6}>
             <Typography
               variant={"h6"}
-              style={{ textAlign: "center", color: "#b8b6b2" }}
+              style={{ textAlign: "center", color: "orange", marginTop: 10 }}
             >
               Orders of last 30 days
             </Typography>
@@ -172,7 +173,7 @@ function Dashboard(props) {
           <Grid item sm={12} md={6}>
             <Typography
               variant={"h6"}
-              style={{ textAlign: "center", color: "#b8b6b2" }}
+              style={{ textAlign: "center", color: "orange", marginTop: 10 }}
             >
               Active Users
             </Typography>
@@ -181,7 +182,7 @@ function Dashboard(props) {
           <Grid item sm={12} md={6}>
             <Typography
               variant={"h6"}
-              style={{ textAlign: "center", color: "#b8b6b2" }}
+              style={{ textAlign: "center", color: "orange", marginTop: 10 }}
             >
               Transaction/Commission
             </Typography>
@@ -207,13 +208,13 @@ const mapDispatchToProps = (dispatch) => {
     getTransactions: () => {
       dispatch(getTransactionDate());
     },
-    getFeedBackCount:()=>{
+    getFeedBackCount: () => {
       dispatch(getFeedBackCount());
     },
-    getProblemCount:()=>{
+    getProblemCount: () => {
       dispatch(getProblemCount());
     },
-    getSolvedProblemCount:()=>{
+    getSolvedProblemCount: () => {
       dispatch(getSolvedProblemCount());
     },
   };
@@ -223,9 +224,9 @@ const mapStateToProps = (state) => {
     orders: state.order.orderlist,
     activeUser: state.user.userList,
     transactions: state.transaction.transactionlist,
-    feedbackcount:state.feedback.feedbackcount,
-    problemcount:state.problem.problemcount,
-    solvedproblemcount:state.solvedproblem.solvedproblemcount
+    feedbackcount: state.feedback.feedbackcount,
+    problemcount: state.problem.problemcount,
+    solvedproblemcount: state.solvedproblem.solvedproblemcount,
   };
 };
 

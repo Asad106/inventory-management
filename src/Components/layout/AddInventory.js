@@ -109,8 +109,8 @@ const AddInventory = (props) => {
       return false;
     }
     //handle price validations
-    if (inventory.price < 0 || inventory.price === "") {
-      errorprice = "price cannot be empty";
+    if (inventory.price < 0) {
+      errorprice = "price cannot be less than 0";
     }
     if (errorprice) {
       setInventory({ ...inventory, errorprice });
@@ -118,7 +118,7 @@ const AddInventory = (props) => {
     }
     //handle Unitprice validations
     if (inventory.pricePerUnit < 0) {
-      errorpricePerUnit = "price cannot be empty";
+      errorpricePerUnit = "price cannot be less than 0";
     }
     if (errorpricePerUnit) {
       setInventory({ ...inventory, errorpricePerUnit });

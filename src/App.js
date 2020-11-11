@@ -5,7 +5,7 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import SignIn from "./Components/auth/SignIn";
 import Dashboard from "./Components/Dashboard/Dashboard";
-import Statistics from "./Components/layout/Statistics";
+// import Statistics from "./Components/layout/Statistics";
 import Sales from "./Components/layout/Sales";
 import Resolution from "./Components/layout/Resolution";
 import UserManagement from "./Components/layout/UserManagement";
@@ -18,15 +18,15 @@ import AddInventory from "./Components/layout/AddInventory";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddUser from "./Components/layout/AddUser";
-import Orders from "./Components/layout/Orders"
-import Transactions from "./Components/layout/Transactions"
-import Cart from "./Components/layout/Cart"
-import AppFeedBacks from "./Components/layout/AppFeedBacks"
-import Problems from "./Components/layout/Problems"
-
+import Orders from "./Components/layout/Orders";
+import Transactions from "./Components/layout/Transactions";
+import Cart from "./Components/layout/Cart";
+import AppFeedBacks from "./Components/layout/AppFeedBacks";
+import Problems from "./Components/layout/Problems";
+import Loader from "./Components/common/Loader";
 
 function App(props) {
-  const [loading, setLoading] = useState(true);
+  const [loader, setLoader] = useState(true);
   const { auth } = props;
 
   const sleep = (milliseconds) => {
@@ -36,7 +36,7 @@ function App(props) {
   const wait = async (milliseconds) => {
     console.log("waiting for 2 seconds");
     await sleep(milliseconds);
-    setLoading(false);
+    setLoader(false);
   };
 
   useEffect(() => {
@@ -45,21 +45,20 @@ function App(props) {
     };
   });
 
+  console.log(props);
+
   if (auth.uid) {
     // eslint-disable-next-line no-lone-blocks
     {
-      if (loading) {
-        return (
-          <div className="loading">
-            <ClipLoader size={60} color={"#123abc"} loading={loading} />
-          </div>
-        );
+      if (loader) {
+        return <Loader open={true} />;
       }
     }
 
     return (
       <React.Fragment>
         <BrowserRouter>
+          <Loader open={props.isLoading} />
           <div className="App">
             <ToastContainer
               position="top-right"
@@ -73,9 +72,9 @@ function App(props) {
             <SideNavbar>
               <Switch>
                 <Route exact path="/" component={Dashboard} />
-                <Route path="/statistics" component={Statistics} />
+                {/* <Route path="/statistics" component={Statistics} /> */}
                 <Route path="/sales" component={Sales} />
-                <Route path="/resolution" component={Resolution} />
+                {/* <Route path="/resolution" component={Resolution} /> */}
                 <Route path="/user" component={UserManagement} />
                 <Route path="/inventory" component={InventoryManagement} />
                 <Route path="/settings" component={Settings} />
@@ -108,36 +107,10 @@ function App(props) {
   }
 }
 
-// class App extends React.Component {
-//   state = { loading: true };
-
-//   sleep = (milliseconds) => {
-//     return new Promise((resolve) => setTimeout(resolve, milliseconds));
-//   };
-
-//   wait = async (milliseconds = 2000) => {
-//     console.log("waiting for 2 seconds");
-//     await this.sleep(milliseconds);
-//     this.setState({ loading: false });
-//   };
-
-//   componentDidMount() {
-//     this.wait(2000);
-//   }
-
-//   componentWillUnmount() {
-//     this.setState({ loading: true });
-//   }
-
-//   render() {
-//     const { auth } = this.props;
-//     return { if(condition) {} };
-//   }
-// }
 const mapStateToProps = (state) => {
-  //console.log(state);
   return {
     auth: state.firebase.auth,
+    isLoading: state.loading.status,
   };
 };
 

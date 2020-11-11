@@ -129,7 +129,7 @@ const AddUser = (props) => {
       return false;
     }
     // phone validation
-    var phoneno = /^\d{15}$/;
+    var phoneno = /^\d{11}$/;
     if (!user.phoneNo.match(phoneno) || user.phoneNo === "") {
       errorphoneNo = "plz provide valid phone number ";
     }
