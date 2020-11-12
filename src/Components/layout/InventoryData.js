@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     width: "50px",
     height: "50px",
   },
+  header: {
+    color: "white",
+  },
 }));
 
 function InventoryData(props) {
@@ -28,14 +31,21 @@ function InventoryData(props) {
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="Inventory-table">
-        <TableHead>
+        <TableHead
+          style={{
+            borderWidth: "2px solid grey ",
+            backgroundColor: "#817aff",
+          }}
+        >
           <TableRow>
-            <TableCell>Product Name</TableCell>
-            <TableCell>Product Type</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell>Price Per Unit</TableCell>
-            <TableCell>Image</TableCell>
-            <TableCell align="center">Actions</TableCell>
+            <TableCell className={classes.header}>Product Name</TableCell>
+            <TableCell className={classes.header}>Product Type</TableCell>
+            <TableCell className={classes.header}>Price</TableCell>
+            <TableCell className={classes.header}>Price Per Unit</TableCell>
+            <TableCell className={classes.header}>Image</TableCell>
+            <TableCell className={classes.header} align="center">
+              Actions
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

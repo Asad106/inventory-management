@@ -22,7 +22,7 @@ function AsyncCSV({ data }) {
 
     alert(data.length);
     if (data.length < 1) {
-      toast.error("Record not found");
+      toast.error("Records not found");
       return false;
     }
 

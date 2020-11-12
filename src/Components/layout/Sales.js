@@ -14,6 +14,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -30,11 +31,13 @@ const Styles = (theme) => ({
   button: {
     display: "block",
     marginTop: theme.spacing(2),
-    color: "green",
+    color: "white",
+    backgroundColor: "#24aff0",
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    width: "93%",
+    paddingLeft: 10,
   },
 });
 function Sales(props) {
@@ -53,7 +56,7 @@ function Sales(props) {
   useEffect(() => {
     props.getTransactions(startDate, endDate);
   }, [startDate, endDate]);
-  console.log("asasaass" + startDate, "sasasasas" + endDate);
+  // console.log("asasaass" + startDate, "sasasasas" + endDate);
   const handleChange = (event) => {
     setType(event.target.value);
   };
@@ -66,22 +69,27 @@ function Sales(props) {
     setOpen(true);
   };
   return (
-    <Box mx={2} className={classes.root}>
+    <Box mx={4} className={classes.root}>
       <Typography variant="h6" style={{ paddingBottom: "10px" }}>
         Sales & Reports
       </Typography>
-      <Container style={{ width: "60%", padding: 10 }}>
+      <Container
+        justify="center"
+        style={{
+          width: "60%",
+          paddingLeft: 20,
+          borderColor: "rgba(0, 0, 0, 0.54)",
+          backgroundColor: "#e4f1f7",
+          borderRadius: 20,
+        }}
+      >
         <Grid
           container
           mx={5}
-          justify="center"
           style={{
-            borderColor: "rgba(0, 0, 0, 0.54)",
-            backgroundColor: "#FFFFFF",
             marginTop: 20,
+            display: "flex",
             flexDirection: "column",
-            borderRadius: 20,
-            paddingLeft: "30%",
           }}
         >
           <Grid
@@ -91,25 +99,28 @@ function Sales(props) {
           >
             <Typography
               style={{
-                fontSize: 16,
-                padding: 16,
+                fontSize: 20,
+                padding: 20,
                 fontWeight: "bold",
               }}
             >
               Generate Reports
             </Typography>
           </Grid>
-          <Grid item px={4} justify={"center"}>
+          <Grid item px={4} style={{ justifyContent: "center" }}>
             <div>
               <Button
                 variant="primary"
                 className={classes.button}
                 onClick={handleOpen}
+                style={{ justifyContent: "center", marginLeft: "10" }}
               >
                 Select Type
               </Button>
               <FormControl className={classes.formControl}>
-                <InputLabel id="report">Reports</InputLabel>
+                <InputLabel id="report" className={classes.formControl}>
+                  Reports
+                </InputLabel>
                 <Select
                   labelId="report"
                   id="report"
@@ -118,50 +129,67 @@ function Sales(props) {
                   onOpen={handleOpen}
                   value={type}
                   onChange={handleChange}
+                  // fullWidth
                 >
                   <MenuItem value={"orders"}>Orders Report</MenuItem>
                   <MenuItem value={"transactions"}>
                     Transactions Report
                   </MenuItem>
-                  <MenuItem value={"users"}>Users Report</MenuItem>
+                  {/* <MenuItem value={"users"}>Users Report</MenuItem> */}
                 </Select>
               </FormControl>
             </div>
           </Grid>
-          <Grid item>
-            <Typography>From : </Typography>
+          <Grid
+            item
+            style={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              marginTop: 20,
+            }}
+          >
+            <Typography> Start Date:</Typography>
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               // isClearable
               showYearDropdown
+              placeholderText="select start date"
               required
               scrollableYearDropdown
-              style={{ borderColor: "lightGrey" }}
             />
-            <Typography>To : </Typography>
+            <Typography>End Date: </Typography>
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date)}
               // isClearable
+              placeholderText="select end date"
               required
               showYearDropdown
               scrollableYearDropdown
-              style={{ borderColor: "lightGrey" }}
+              style={{ borderColor: "lightGrey", padding: 20 }}
             />
           </Grid>
           {
             (() => {
               if (type === "orders")
                 return (
-                  <Grid item px={4} style={{ textAlign: "center" }}>
+                  <Grid
+                    item
+                    ml={5}
+                    style={{
+                      justifyContent: "center",
+                      alignSelf: "center",
+                      marginTop: 20,
+                    }}
+                  >
                     <Button
                       variant="filled"
                       className={classes.button}
                       // onClick={handleOpen}
                       style={{
                         marginBottom: 10,
-                        backgroundColor: "#3f51b5",
+                        backgroundColor: "#24aff0",
                       }}
                     >
                       <AsyncCSV data={props.orders} />
@@ -172,8 +200,12 @@ function Sales(props) {
                 return (
                   <Grid
                     item
-                    px={4}
-                    // style={{ justifyContent: "center", textAlign: "center" }}
+                    ml={5}
+                    style={{
+                      justifyContent: "center",
+                      alignSelf: "center",
+                      marginTop: 20,
+                    }}
                   >
                     <Button
                       variant="filled"
@@ -181,8 +213,8 @@ function Sales(props) {
                       onClick={handleOpen}
                       style={{
                         marginBottom: 10,
-                        alignSelf: "center",
-                        backgroundColor: "#ffffff",
+                        // alignSelf: "center",
+                        backgroundColor: "#24aff0",
                       }}
                     >
                       <TransactionReport data={props.transactions} />

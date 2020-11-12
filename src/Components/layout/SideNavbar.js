@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { signOut } from "../../redux/actions/authActions";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import FeedbackIcon from "@material-ui/icons/Feedback";
+import ReportProblemIcon from "@material-ui/icons/ReportProblem";
 
 import {
   AppBar,
@@ -98,13 +101,13 @@ const itemList1 = [
   {
     id: 5,
     text: "Feed Backs",
-    icon: <BusinessCenter />,
+    icon: <FeedbackIcon />,
     url: "/feedbacks",
   },
   {
     id: 6,
     text: "Problems/Solutions",
-    icon: <BusinessCenter />,
+    icon: <ReportProblemIcon />,
     url: "/prosols",
   },
 ];
@@ -125,7 +128,7 @@ const itemList2 = [
   {
     id: 9,
     text: "Carts",
-    icon: <StoreMallDirectory />,
+    icon: <AddShoppingCartIcon />,
     url: "/carts",
   },
   {

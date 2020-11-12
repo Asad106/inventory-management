@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import ListViewHeader from "../common/ListViewHeader";
+import ListViewHeaderWithoutAddButton from "../common/ListViewHeaderWithoutAddButton";
 import { Box } from "@material-ui/core";
 import UserData from "./UserData";
 import { compose } from "redux";
@@ -101,11 +101,11 @@ function UserManagement(props) {
   };
   return (
     <Box mx={2} className={classes.root}>
-      <ListViewHeader
+      <ListViewHeaderWithoutAddButton
         searchHandler={searchHandler}
         title="User Management"
-        btnLabel="Add User"
-        btnLink="/addUser"
+        // btnLabel="Add User"
+        // btnLink="/addUser"
       />
       <Box my={2}>
         <UserData

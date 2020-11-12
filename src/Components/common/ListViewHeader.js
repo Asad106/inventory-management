@@ -80,7 +80,7 @@ function ListViewHeader({
                 style={{
                   fontSize: 12,
                   color: "white",
-                  backgroundColor: "lightgray",
+                  backgroundColor: "#817aff",
                 }}
                 // onClick={loadSearch}
               >

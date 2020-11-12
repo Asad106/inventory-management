@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CSVLink } from "react-csv";
+import { toast } from "react-toastify";
 
 // const headers = [
 //   { label: "First Name", key: "firstName" },
@@ -17,6 +18,11 @@ function TransactionReport({ data }) {
   });
   console.log(data);
   const downloadReport = (event, done) => {
+    alert(data.length);
+    if (data.length < 1) {
+      toast.error("Records not found");
+      return false;
+    }
     // API call to get data
     const objReport = {
       filename: "Report.csv",
@@ -41,9 +47,9 @@ function TransactionReport({ data }) {
   return (
     <CSVLink
       {...state.csvReport}
-      asyncOnClick={true}
+      asyncOnClick={false}
       onClick={downloadReport}
-      style={{ textDecoration: "none", color: "blue" }}
+      style={{ textDecoration: "none", color: "white" }}
     >
       Generate Report
     </CSVLink>

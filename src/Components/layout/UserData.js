@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     width: "50px",
     height: "50px",
   },
+  header: {
+    color: "white",
+  },
 }));
 
 function UserData(props) {
@@ -28,16 +31,23 @@ function UserData(props) {
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="Inventory-table">
-        <TableHead style={{ borderWidth: "2px solid grey " }}>
+        <TableHead
+          style={{
+            borderWidth: "2px solid grey ",
+            backgroundColor: "#817aff",
+          }}
+        >
           <TableRow>
-            <TableCell> Name</TableCell>
-            <TableCell>Phone #</TableCell>
-            <TableCell>Address</TableCell>
+            <TableCell className={classes.header}> Name</TableCell>
+            <TableCell className={classes.header}>Phone #</TableCell>
+            <TableCell className={classes.header}>Address</TableCell>
 
-            <TableCell>Status</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Image</TableCell>
-            <TableCell align="center">Actions</TableCell>
+            <TableCell className={classes.header}>Status</TableCell>
+            <TableCell className={classes.header}>Email</TableCell>
+            <TableCell className={classes.header}>Image</TableCell>
+            <TableCell className={classes.header} align="center">
+              Actions
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

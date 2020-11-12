@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     width: "50px",
     height: "50px",
   },
+  header: {
+    color: "white",
+  },
 }));
 
 function TransactionsData(props) {
@@ -28,16 +31,18 @@ function TransactionsData(props) {
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="Transaction-table">
-        <TableHead style={{ borderWidth: "2px solid grey " }}>
+        <TableHead
+          style={{ borderWidth: "2px solid grey ", backgroundColor: "#817aff" }}
+        >
           <TableRow>
-            <TableCell>Sender</TableCell>
+            <TableCell className={classes.header}>Sender</TableCell>
 
-            <TableCell>Reciever</TableCell>
-            <TableCell>Amount</TableCell>
+            <TableCell className={classes.header}>Reciever</TableCell>
+            <TableCell className={classes.header}>Amount</TableCell>
 
-            <TableCell>Commission</TableCell>
-            <TableCell>Method</TableCell>
-            <TableCell>Transaction Date</TableCell>
+            <TableCell className={classes.header}>Commission</TableCell>
+            <TableCell className={classes.header}>Method</TableCell>
+            <TableCell className={classes.header}>Transaction Date</TableCell>
             {/* <TableCell align="center">Actions</TableCell> */}
           </TableRow>
         </TableHead>
