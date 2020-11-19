@@ -93,9 +93,9 @@ function Inventory(props) {
     setPage(page - showPerPage);
     // limit = limit - 20;
   };
-
   const onForward = () => {
     setPage(page + showPerPage);
+    console.log("chk" + page, "limit" + showPerPage);
     // limit = limit + 20;
   };
 
@@ -115,6 +115,7 @@ function Inventory(props) {
 
   useEffect(() => {
     props.getInventories(showPerPage, page);
+    console.log("chk" + page, "limit" + showPerPage);
   }, []);
   // console.log(props.inventories);
   return (

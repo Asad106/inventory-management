@@ -7,7 +7,7 @@ import SignIn from "./Components/auth/SignIn";
 import Dashboard from "./Components/Dashboard/Dashboard";
 // import Statistics from "./Components/layout/Statistics";
 import Sales from "./Components/layout/Sales";
-import Resolution from "./Components/layout/Resolution";
+// import Resolution from "./Components/layout/Resolution";
 import UserManagement from "./Components/layout/UserManagement";
 import InventoryManagement from "./Components/layout/Inventory";
 import FinancialManagement from "./Components/layout/FinancialManagement";
@@ -74,7 +74,7 @@ function App(props) {
                 <Route exact path="/" component={Dashboard} />
                 {/* <Route path="/statistics" component={Statistics} /> */}
                 <Route path="/sales" component={Sales} />
-                {/* <Route path="/resolution" component={Resolution} /> */}
+                {/* <Route path="/solve" component={Resolution} /> */}
                 <Route path="/user" component={UserManagement} />
                 <Route path="/inventory" component={InventoryManagement} />
                 <Route path="/settings" component={Settings} />

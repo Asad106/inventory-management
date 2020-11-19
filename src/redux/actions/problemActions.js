@@ -41,6 +41,26 @@ export const getProblemCount = () => {
       });
   };
 };
+
+export const deleteProblem = (id) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    firebase
+      .firestore()
+      .collection("problems")
+      .doc(id)
+      .delete()
+      .then((res) => {
+        dispatch(isLoading());
+        getProblems();
+        dispatch(clearLoader());
+      })
+      .catch((err) => {
+        console.log("error while deleting the problem", err);
+      });
+  };
+};
+
 export const refreshControl = () => {
   return (dispatch, getState, { getFirebase }) => {
     dispatch({ type: "REFRESH" });

@@ -37,7 +37,7 @@ const Pagination = ({
           <IconButton onClick={onBack} disabled={page === 0}>
             <ArrowBackIosIcon size="small" />
           </IconButton>
-          <IconButton onClick={onForward} disabled={dataSize < showPerPage}>
+          <IconButton onClick={onForward}>
             <ArrowForwardIosIcon size="small" />
           </IconButton>
         </Grid>

@@ -64,7 +64,7 @@ function OrdersData(props) {
               <TableCell className={classes.header}>
                 Cart Creation Date
               </TableCell>
-              <TableCell>Dropoff Location</TableCell>
+              <TableCell className={classes.header}>Dropoff Location</TableCell>
 
               <TableCell className={classes.header}>
                 Cart to Order Date

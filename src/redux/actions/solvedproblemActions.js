@@ -1,7 +1,6 @@
 /** @format */
-import { isLoading, clearLoading, clearLoader } from "./loadingAction";
+import { isLoading, clearLoader } from "./loadingAction";
 //CART ACTIONS
-
 export const getSolvedProblems = () => {
   return (dispatch, getState, { getFirebase }) => {
     dispatch(isLoading());
@@ -9,9 +8,7 @@ export const getSolvedProblems = () => {
     firebase
       .firestore()
       .collection("solvedproblems")
-      .orderBy("solutiondate")
-      // .startAt(0)
-      // .limit(5)
+      .orderBy("problemdate")
       .get()
       .then((querySnapshot) => {
         let solvedproblems = [];
@@ -30,7 +27,6 @@ export const getSolvedProblemCount = () => {
     firebase
       .firestore()
       .collection("solvedproblems")
-      // .startAt(0)
       .limit(250)
       .get()
       .then((querySnapshot) => {
@@ -38,6 +34,25 @@ export const getSolvedProblemCount = () => {
         solvedproblemcount = querySnapshot.size;
         dispatch({ type: "GET_SOLVEDPROBLEMCOUNT", data: solvedproblemcount });
         console.log("solvedproblemcount is", solvedproblemcount);
+      });
+  };
+};
+export const addProblemToSolution = (problem) => {
+  return (dispatch, getState, { getFirebase }) => {
+    dispatch(isLoading());
+    const firebase = getFirebase();
+    firebase
+      .firestore()
+      .collection("solvedproblems")
+      .add({ ...problem })
+      .then((res) => {
+        dispatch({ type: "ADD_PROBLEM_TO_SOLUTION" });
+        getSolvedProblems();
+        refreshControl();
+        dispatch(clearLoader());
+      })
+      .catch((err) => {
+        console.log("error while adding problem to solutions", err);
       });
   };
 };

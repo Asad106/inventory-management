@@ -96,7 +96,7 @@ const itemList1 = [
   //   id: 4,
   //   text: "Resolution Center",
   //   icon: <BusinessCenter />,
-  //   url: "/Resolution",
+  //   url: "/solve",
   // },
   {
     id: 5,
@@ -106,7 +106,7 @@ const itemList1 = [
   },
   {
     id: 6,
-    text: "Problems/Solutions",
+    text: "Resolution Center",
     icon: <ReportProblemIcon />,
     url: "/prosols",
   },

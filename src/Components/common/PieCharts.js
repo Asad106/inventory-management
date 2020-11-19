@@ -51,7 +51,7 @@ const PieChart = ({ ActiveUsers }) => {
           shade: "dark",
           type: "horizontal",
           gradientToColors: ["#ecf987"],
-          stops: [0, 100],
+          // stops: [0],
         },
       },
       stroke: {

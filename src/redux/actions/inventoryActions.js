@@ -2,7 +2,7 @@
 
 import { clearLoader, isLoading } from "./loadingAction";
 
-export const getInventories = (limit, startAt) => {
+export const getInventories = (limited, start) => {
   return (dispatch, getState, { getFirebase }) => {
     dispatch(isLoading());
     const firebase = getFirebase();
@@ -10,7 +10,7 @@ export const getInventories = (limit, startAt) => {
       .firestore()
       .collection("inventory")
       .orderBy("productName")
-      .startAt(startAt)
+      .startAt(start)
       .limit(50)
       .get()
       .then((querySnapshot) => {

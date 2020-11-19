@@ -55,7 +55,7 @@ export const addUser = (user, history) => {
 export const getUserById = (id) => {
   console.log(" Edit USER BY id in action" + id);
   return (dispatch, getState, { getFirebase }) => {
-    dispatch(isLoading());
+    // dispatch(isLoading());
     const firebase = getFirebase();
     firebase
       .firestore()
@@ -65,7 +65,7 @@ export const getUserById = (id) => {
       .then((doc) => {
         console.log(doc.data());
         dispatch({ type: "EDIT_USER", data: doc.data() });
-        dispatch(clearLoader());
+        // dispatch(clearLoader());
       })
       .catch((err) => {
         console.log("error while Editing", err);
