@@ -6,7 +6,6 @@ import ListViewHeader from "../common/ListViewHeader";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import Pagination from "./Pagination";
-// import Loader from "../../Components/common/Loader";
 import {
   getInventories,
   deleteInventory,

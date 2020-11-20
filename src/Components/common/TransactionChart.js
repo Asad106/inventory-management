@@ -96,6 +96,7 @@ const TransactionChart = ({ transactions }) => {
       },
     },
   };
+  console.log("transaction objects are", transactions);
 
   return (
     <>

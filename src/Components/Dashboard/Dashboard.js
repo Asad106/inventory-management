@@ -189,7 +189,7 @@ function Dashboard(props) {
             <TransactionChart transactions={props.transactions} />
           </Grid>
           <Grid item sm={12} md={6}>
-            {/* <PieChart orders={props.orders} /> */}asvdavdavd
+            {/* <PieChart orders={props.orders} /> */}
           </Grid>
         </Grid>
       )}

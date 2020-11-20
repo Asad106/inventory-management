@@ -148,7 +148,7 @@ function Sales(props) {
               marginTop: 20,
             }}
           >
-            <Typography> Start Date:</Typography>
+            <Typography>StartDate:</Typography>
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
@@ -158,7 +158,7 @@ function Sales(props) {
               required
               scrollableYearDropdown
             />
-            <Typography>End Date: </Typography>
+            <Typography>EndDate:</Typography>
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date)}

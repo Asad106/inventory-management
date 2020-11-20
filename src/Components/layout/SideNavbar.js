@@ -144,12 +144,12 @@ const itemList2 = [
     icon: <AttachMoney />,
     url: "/transactions",
   },
-  {
-    id: 12,
-    text: "Settings",
-    icon: <SettingsIcon />,
-    url: "/setting",
-  },
+  // {
+  //   id: 12,
+  //   text: "Settings",
+  //   icon: <SettingsIcon />,
+  //   url: "/setting",
+  // },
 ];
 
 class SideNavbar extends Component {
@@ -257,7 +257,14 @@ class SideNavbar extends Component {
                     onClose={this.handleClose}
                   >
                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleClose}>Settings</MenuItem>
+                    <MenuItem>
+                      <Link
+                        to="/setting"
+                        style={{ textDecoration: "none", color: "#46484a" }}
+                      >
+                        Settings
+                      </Link>
+                    </MenuItem>
                     {auth && (
                       <MenuItem onClick={this.props.signOut}>Logout</MenuItem>
                     )}

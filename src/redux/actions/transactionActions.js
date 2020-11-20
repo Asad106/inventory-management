@@ -47,8 +47,8 @@ export const getTransactionDate = () => {
           transactions.push({ ...doc.data(), id: doc.id });
         });
         dispatch({ type: "TRANSACTION_DATE", data: transactions });
-        dispatch(clearLoader());
         console.log("transaction are", transactions);
+        dispatch(clearLoader());
       });
   };
 };

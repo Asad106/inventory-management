@@ -14,14 +14,24 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { auth } from "firebase";
-import { Typography } from "@material-ui/core";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@material-ui/core";
+import img from "../../assets/header.png";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     ...theme.typography.button,
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(3),
-    color: "blueGrey",
+    backgroundColor: "#ffffff",
+    padding: theme.spacing(1),
+    color: "white",
+    borderRadius: "20px",
   },
 }));
 
@@ -51,11 +61,71 @@ function Settings(props) {
   console.log("messeage", props.auth.email);
   return (
     <>
-      <div className={classes.root}>{"You can reset your password here"}</div>
-      <div style={{ textAlign: "center", paddingTop: "30px" }}>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-          Change Password
-        </Button>
+      <Box mx={4} style={{ backgroundColor: "white" }}>
+        <Typography variant="h6" style={{ padding: "10px" }}>
+          Settings
+        </Typography>
+      </Box>
+      <div
+        style={{
+          textAlign: "center",
+          paddingLeft: "18%",
+          paddingRight: "18%",
+          paddingTop: "5%",
+        }}
+      >
+        <Card className={classes.root}>
+          <CardContent>
+            <Typography
+              color="textSecondary"
+              gutterBottom
+              style={{ color: "#4836ba", fontSize: 22, fontWeight: "300" }}
+            >
+              You can reset your password here .
+            </Typography>
+            <img
+              src={img}
+              alt="lock_img"
+              style={{ height: 150, paddingTop: 10 }}
+            />
+          </CardContent>
+          <CardActions>
+            {props.auth.email ? (
+              <Button
+                variant="contained"
+                size={"small"}
+                color="primary"
+                onClick={handleClickOpen}
+                style={{ margin: "auto" }}
+              >
+                Change Password
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                size={"small"}
+                color="primary"
+                onClick={handleClickOpen}
+                style={{ margin: "auto" }}
+              >
+                Reset Password
+              </Button>
+            )}
+          </CardActions>
+          <>
+            {!props.auth.email ? (
+              <Link
+                to="/"
+                variant="body2"
+                style={{ color: "blue", marginTop: 10 }}
+              >
+                Back to Login
+              </Link>
+            ) : (
+              ""
+            )}
+          </>
+        </Card>
         <Dialog
           open={open}
           onClose={handleClose}
@@ -64,9 +134,16 @@ function Settings(props) {
           <DialogTitle id="form-dialog-title">Reset Password</DialogTitle>
 
           <DialogContent>
-            <DialogContentText>
-              You will recieve password reset link on
-            </DialogContentText>
+            {props.auth.email ? (
+              <DialogContentText>
+                You will recieve password reset link on
+              </DialogContentText>
+            ) : (
+              <DialogContentText>
+                Please provide a valid email to reset password
+              </DialogContentText>
+            )}
+
             {props.auth.email ? (
               <Typography
                 style={{ color: "blue", fontSize: 16, marginTop: 10 }}
@@ -87,7 +164,7 @@ function Settings(props) {
             )}
           </DialogContent>
           <DialogActions style={{ marginTop: 20 }}>
-            <Button onClick={handleClose} variant="contained" color="secondary">
+            <Button onClick={handleClose} variant={"contained"} color="default">
               Cancel
             </Button>
             <Button onClick={handleReset} variant="contained" color="primary">

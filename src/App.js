@@ -104,27 +104,14 @@ function App(props) {
     );
   } else {
     return (
-      <SignIn />
-      // <s>
-      //   <BrowserRouter>
-      //     <Switch>
-      //       <Route exact path={"/"} component={SignIn} />
-      //       {/* <SignIn /> */}
-      //       <Route exact path={"/setting"} component={Settings} />
-      //       {/* <Settings /> */}
-      //     </Switch>
-      //   </BrowserRouter>
-      // </SignIn>
-      // <BrowserRouter>
-      //   <SideNavbar>
-      //     <Switch>
-      //       <Route path={"/setting"} component={Settings} />
-      //     </Switch>
-      //   </SideNavbar>
-      //   <Switch>
-      //     <Route exact path={"/signIn"} component={SignIn} />
-      //   </Switch>
-      // </BrowserRouter>
+      <>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path={"/"} component={SignIn}></Route>
+            <Route exact path={"/setting"} component={Settings}></Route>
+          </Switch>
+        </BrowserRouter>
+      </>
     );
   }
 }
