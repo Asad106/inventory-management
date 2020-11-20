@@ -77,7 +77,7 @@ function App(props) {
                 {/* <Route path="/solve" component={Resolution} /> */}
                 <Route path="/user" component={UserManagement} />
                 <Route path="/inventory" component={InventoryManagement} />
-                <Route path="/settings" component={Settings} />
+                <Route path="/setting" component={Settings} />
                 <Route path="/carts" component={Cart} />
                 <Route path="/orders" component={Orders} />
                 <Route path="/feedbacks" component={AppFeedBacks} />
@@ -103,7 +103,29 @@ function App(props) {
       </React.Fragment>
     );
   } else {
-    return <SignIn />;
+    return (
+      <SignIn />
+      // <s>
+      //   <BrowserRouter>
+      //     <Switch>
+      //       <Route exact path={"/"} component={SignIn} />
+      //       {/* <SignIn /> */}
+      //       <Route exact path={"/setting"} component={Settings} />
+      //       {/* <Settings /> */}
+      //     </Switch>
+      //   </BrowserRouter>
+      // </SignIn>
+      // <BrowserRouter>
+      //   <SideNavbar>
+      //     <Switch>
+      //       <Route path={"/setting"} component={Settings} />
+      //     </Switch>
+      //   </SideNavbar>
+      //   <Switch>
+      //     <Route exact path={"/signIn"} component={SignIn} />
+      //   </Switch>
+      // </BrowserRouter>
+    );
   }
 }
 

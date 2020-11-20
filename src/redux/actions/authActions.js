@@ -16,7 +16,7 @@ export const signIn = (credentails) => {
   };
 };
 
-export const signOut = () => {
+export const signOut = (history) => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
     firebase
@@ -24,6 +24,23 @@ export const signOut = () => {
       .signOut()
       .then(() => {
         dispatch({ type: "SIGNOUT_SUCCESS" });
+        alert("ho ja out");
+        // history.push("/signIn");
+      })
+      .catch((err) => console.log(err));
+  };
+};
+export const resetPassword = (email) => {
+  return (dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        dispatch({
+          type: "RESET_PASSWORD",
+          message: "Email has been sent please verify",
+        });
       })
       .catch((err) => console.log(err));
   };

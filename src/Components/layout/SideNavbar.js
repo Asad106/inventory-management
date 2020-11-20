@@ -8,6 +8,7 @@ import { signOut } from "../../redux/actions/authActions";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import ReportProblemIcon from "@material-ui/icons/ReportProblem";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 import {
   AppBar,
@@ -142,6 +143,12 @@ const itemList2 = [
     text: "Transactions",
     icon: <AttachMoney />,
     url: "/transactions",
+  },
+  {
+    id: 12,
+    text: "Settings",
+    icon: <SettingsIcon />,
+    url: "/setting",
   },
 ];
 

@@ -48,6 +48,9 @@ class SignIn extends Component {
             </div>
             <button className="btn pink lighten-1 z-depth-0">Login</button>
           </div>
+          <h5 className="grey-text text-darken-3">
+            <a href="/setting">forget password</a>
+          </h5>
         </form>
       </div>
     );
