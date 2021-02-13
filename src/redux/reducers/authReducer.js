@@ -16,6 +16,8 @@ const authReducer = (state = initState, action) => {
       return { ...state };
     case "RESET_PASSWORD":
       return { ...state, authError: action.message };
+    case "RESET_PASSWORD_ERROR":
+      return { ...state, authError: action.message };
 
     case "LOGIN_ERROR":
       console.log("Login Error");

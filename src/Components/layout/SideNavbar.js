@@ -8,7 +8,7 @@ import { signOut } from "../../redux/actions/authActions";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import ReportProblemIcon from "@material-ui/icons/ReportProblem";
-import SettingsIcon from "@material-ui/icons/Settings";
+import { withRouter } from "react-router-dom";
 
 import {
   AppBar,
@@ -144,12 +144,6 @@ const itemList2 = [
     icon: <AttachMoney />,
     url: "/transactions",
   },
-  // {
-  //   id: 12,
-  //   text: "Settings",
-  //   icon: <SettingsIcon />,
-  //   url: "/setting",
-  // },
 ];
 
 class SideNavbar extends Component {
@@ -164,7 +158,7 @@ class SideNavbar extends Component {
   };
 
   handleLogout = () => {
-    this.setState({ anchorEl: null });
+    this.props.signOut(this.props.history);
   };
 
   handleClose = () => {
@@ -211,7 +205,6 @@ class SideNavbar extends Component {
         <Divider />
       </div>
     );
-
     return (
       <React.Fragment>
         <div className={classes.root}>
@@ -266,7 +259,7 @@ class SideNavbar extends Component {
                       </Link>
                     </MenuItem>
                     {auth && (
-                      <MenuItem onClick={this.props.signOut}>Logout</MenuItem>
+                      <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
                     )}
                   </Menu>
                 </div>
@@ -314,8 +307,8 @@ class SideNavbar extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signOut: () => {
-      dispatch(signOut());
+    signOut: (history) => {
+      dispatch(signOut(history));
     },
   };
 };
@@ -327,6 +320,7 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
+  withRouter,
   connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles)
 )(SideNavbar);

@@ -72,6 +72,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { connect } from "react-redux";
 import { signIn } from "../../redux/actions/authActions";
+import { withRouter } from "react-router-dom";
+import { compose } from "redux";
 
 function Copyright() {
   return (
@@ -118,10 +120,9 @@ function SignIn(props) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(credstate);
-    props.signIn(credstate);
+    props.signIn(credstate, props.history);
+    setCred({ email: "", password: "" });
   };
-  console.log(credstate);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -201,12 +202,16 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    signIn: (cred) => {
-      dispatch(signIn(cred));
+    signIn: (cred, history) => {
+      dispatch(signIn(cred, history));
     },
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+// export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(SignIn);
 
 //export default SignIn;

@@ -66,9 +66,9 @@ function OrdersData(props) {
               </TableCell>
               <TableCell className={classes.header}>Dropoff Location</TableCell>
 
-              <TableCell className={classes.header}>
+              {/* <TableCell className={classes.header}>
                 Cart to Order Date
-              </TableCell>
+              </TableCell> */}
               <TableCell className={classes.header}>Provider</TableCell>
               <TableCell className={classes.header}>Total Bill</TableCell>
               <TableCell className={classes.header}>Discount Given</TableCell>
@@ -96,11 +96,11 @@ function OrdersData(props) {
                       order.dropoff_loc.longitude.toString()}
                   </TableCell>
 
-                  <TableCell>
+                  {/* <TableCell>
                     {new Date(
-                      order.card_to_order_date.seconds * 1000
+                      order.creation_date_time.seconds * 1000
                     ).toLocaleString()}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>{order.provider_name}</TableCell>
                   <TableCell>{order.total_bill}</TableCell>
                   <TableCell>{order.discount}</TableCell>

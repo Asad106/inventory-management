@@ -13,8 +13,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Loader(props) {
   const { open } = props;
   const classes = useStyles();
-  //   const [open, setOpen] = React.useState(true);
-  console.log("sasadsadsadsadsadsadsa", open);
   return (
     <div>
       <Backdrop className={classes.backdrop} open={open}>

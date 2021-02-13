@@ -28,7 +28,6 @@ import Loader from "./Components/common/Loader";
 function App(props) {
   const [loader, setLoader] = useState(true);
   const { auth } = props;
-
   const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
@@ -41,78 +40,74 @@ function App(props) {
 
   useEffect(() => {
     return () => {
-      wait(3500);
+      // wait(3500);
     };
   });
 
   console.log(props);
-
-  if (auth.uid) {
-    // eslint-disable-next-line no-lone-blocks
-    {
-      if (loader) {
-        return <Loader open={true} />;
-      }
-    }
-
-    return (
-      <React.Fragment>
-        <BrowserRouter>
-          <Loader open={props.isLoading} />
-          <div className="App">
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              newestOnTop={false}
-              closeOnClick
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-            />
-            <SideNavbar>
-              <Switch>
-                <Route exact path="/" component={Dashboard} />
-                {/* <Route path="/statistics" component={Statistics} /> */}
-                <Route path="/sales" component={Sales} />
-                {/* <Route path="/solve" component={Resolution} /> */}
-                <Route path="/user" component={UserManagement} />
-                <Route path="/inventory" component={InventoryManagement} />
-                <Route path="/setting" component={Settings} />
-                <Route path="/carts" component={Cart} />
-                <Route path="/orders" component={Orders} />
-                <Route path="/feedbacks" component={AppFeedBacks} />
-                <Route path="/prosols" component={Problems} />
-
-                <Route path="/transactions" component={Transactions} />
-
-                <Route
-                  exact
-                  path={["/addInventory", "/addInventory/:id"]}
-                  component={AddInventory}
-                />
-                <Route
-                  exact
-                  path={["/adduser", "/adduser/:id"]}
-                  component={AddUser}
-                />
-              </Switch>
-            </SideNavbar>
-            <ToastContainer />
-          </div>
-        </BrowserRouter>
-      </React.Fragment>
-    );
+  if (loader) {
+    return <Loader open={true} />;
   } else {
-    return (
-      <>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path={"/"} component={SignIn}></Route>
-            <Route exact path={"/setting"} component={Settings}></Route>
-          </Switch>
-        </BrowserRouter>
-      </>
-    );
+    if (auth.uid) {
+      return (
+        <React.Fragment>
+          <BrowserRouter>
+            <Loader open={props.isLoading} />
+            <div className="App">
+              <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                newestOnTop={false}
+                closeOnClick
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
+              <SideNavbar>
+                <Switch>
+                  <Route exact path="/" component={Dashboard} />
+                  {/* <Route path="/statistics" component={Statistics} /> */}
+                  <Route path="/sales" component={Sales} />
+                  {/* <Route path="/solve" component={Resolution} /> */}
+                  <Route path="/user" component={UserManagement} />
+                  <Route path="/inventory" component={InventoryManagement} />
+                  <Route path="/setting" component={Settings} />
+                  <Route path="/carts" component={Cart} />
+                  <Route path="/orders" component={Orders} />
+                  <Route path="/feedbacks" component={AppFeedBacks} />
+                  <Route path="/prosols" component={Problems} />
+
+                  <Route path="/transactions" component={Transactions} />
+
+                  <Route
+                    exact
+                    path={["/addInventory", "/addInventory/:id"]}
+                    component={AddInventory}
+                  />
+                  <Route
+                    exact
+                    path={["/adduser", "/adduser/:id"]}
+                    component={AddUser}
+                  />
+                </Switch>
+              </SideNavbar>
+              <ToastContainer />
+            </div>
+          </BrowserRouter>
+        </React.Fragment>
+      );
+    } else {
+      return (
+        <>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path={"/signin"} component={SignIn}></Route>
+              <Route exact path={"/setting"} component={Settings}></Route>
+            </Switch>
+          </BrowserRouter>
+        </>
+      );
+    }
   }
 }
 

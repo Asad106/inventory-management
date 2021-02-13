@@ -65,6 +65,11 @@ function TransactionsData(props) {
                   {new Date(
                     transaction.transaction_date * 1000
                   ).toLocaleString()}
+                  {alert(
+                    new Date(
+                      transaction.transaction_date * 1000
+                    ).toLocaleString()
+                  )}
                 </TableCell>
 
                 {/* <TableCell align="center">

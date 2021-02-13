@@ -1,6 +1,6 @@
 /** @format */
 
-export const signIn = (credentails) => {
+export const signIn = (credentails, history) => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
 
@@ -9,6 +9,7 @@ export const signIn = (credentails) => {
       .signInWithEmailAndPassword(credentails.email, credentails.password)
       .then(() => {
         dispatch({ type: "LOGIN_SUCCESS" });
+        history.push("/");
       })
       .catch((err) => {
         dispatch({ type: "LOGIN_ERROR", err });
@@ -24,13 +25,13 @@ export const signOut = (history) => {
       .signOut()
       .then(() => {
         dispatch({ type: "SIGNOUT_SUCCESS" });
-        alert("ho ja out");
-        // history.push("/signIn");
+        history.push("/signin");
       })
       .catch((err) => console.log(err));
   };
 };
 export const resetPassword = (email) => {
+  console.log(email);
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
     firebase
@@ -42,7 +43,12 @@ export const resetPassword = (email) => {
           message: "Email has been sent please verify",
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        dispatch({
+          type: "RESET_PASSWORD_ERROR",
+          message: "Error while sending code",
+        })
+      );
   };
 };
 

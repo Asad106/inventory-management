@@ -91,10 +91,6 @@ function ProblemsData(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  // const mergedObj = (state, solutionArea) => {
-  //   let newObj = { ...state, ...solutionArea };
-  //   return newObj;
-  // };
   return (
     <>
       <TableContainer component={Paper}>

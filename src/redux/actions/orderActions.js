@@ -11,7 +11,7 @@ export const getOrders = () => {
     firebase
       .firestore()
       .collection("order")
-      .orderBy("card_to_order_date")
+      .orderBy("creation_date_time")
       // .startAt(0)
       // .limit(5)
       .get()

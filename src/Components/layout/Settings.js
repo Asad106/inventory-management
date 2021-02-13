@@ -14,7 +14,6 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { auth } from "firebase";
-import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import {
   Box,
   Card,
@@ -47,18 +46,19 @@ function Settings(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleReset = () => {
-    if (email != "" && email != auth.email) {
+  const handleResets = () => {
+    if (email) {
       props.resetPassword(email);
       toast.success(props.message);
-    } else {
-      toast.error("no such email is found");
     }
+  };
+  const handleReset = () => {
+    props.resetPassword(props.auth.email);
+    toast.success(props.message);
   };
   const handleChange = (e) => {
     setEmail(e.target.value);
   };
-  console.log("messeage", props.auth.email);
   return (
     <>
       <Box mx={4} style={{ backgroundColor: "white" }}>
@@ -115,7 +115,7 @@ function Settings(props) {
           <>
             {!props.auth.email ? (
               <Link
-                to="/"
+                to="/signin"
                 variant="body2"
                 style={{ color: "blue", marginTop: 10 }}
               >
@@ -167,9 +167,19 @@ function Settings(props) {
             <Button onClick={handleClose} variant={"contained"} color="default">
               Cancel
             </Button>
-            <Button onClick={handleReset} variant="contained" color="primary">
-              Reset
-            </Button>
+            {props.auth.email ? (
+              <Button onClick={handleReset} variant="contained" color="primary">
+                Reset
+              </Button>
+            ) : (
+              <Button
+                onClick={handleResets}
+                variant="contained"
+                color="primary"
+              >
+                Reset
+              </Button>
+            )}
           </DialogActions>
         </Dialog>
       </div>

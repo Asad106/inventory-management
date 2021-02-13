@@ -40,7 +40,6 @@ export const addUser = (user, history) => {
       .collection("users")
       .add({ ...user })
       .then((res) => {
-        console.log("we are getting ressponnsa", res);
         dispatch({ type: "ADD_USER" });
         refreshControl();
         history.push("/user");
@@ -101,7 +100,6 @@ export const getActiveUsers = () => {
     firebase
       .firestore()
       .collection("users")
-      // .orderBy("status")
       .where("status", "==", "Active")
       .get()
       .then((querySnapshot) => {

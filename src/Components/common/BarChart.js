@@ -3,11 +3,11 @@ import Chart from "react-apexcharts";
 import moment from "moment";
 
 const BarChart = ({ orders }) => {
-  // console.log(orders);
+  console.log(orders);
   //Return the series in form of array of objects
   const getChartDataSeries = (orderData) => {
     const chartDataInObjForm = orderData.reduce((formattedResult, item) => {
-      const key = moment(item.card_to_order_date.toDate()).format("MMM DD");
+      const key = moment(item.creation_date_time.toDate()).format("MMM DD");
 
       if (formattedResult.hasOwnProperty(key)) {
         formattedResult[key] = formattedResult[key] + 1;
